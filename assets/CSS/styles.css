@@ -58,6 +58,7 @@ header .navbar {
 .navbar .nav-menu .nav-link{
     padding: 10px 18px;
     font-size: 20px;
+    font-weight: bold;
     transition: 0.3s ease;
     color: black;
 }
@@ -84,7 +85,9 @@ header .navbar {
 }
 
 .title{
-    padding-left: 250px;
+    text-align: left;
+    position: relative;
+    padding-left: 400px;
     margin: 0;
     line-height: .9;
     letter-spacing: 5px;
@@ -108,7 +111,7 @@ header .navbar {
 
 .subtitle{ 
     margin-top: 30px;
-    padding-left: 380px;
+    padding-left: 680px;
     font-size: 50px;
     display: inline-block;
     font-size: semi-bold;
@@ -131,8 +134,8 @@ header .navbar {
 /* ------------------ Stain Element --------------------- */
 .stain_one {
     position: relative;
-    top: -450px;
-    left: 250px;
+    top: -550px;
+    left: 350px;
     width: 500px;
     height: 500px;
     transform: translate(-20%, -20%) scale(0) ;
@@ -158,7 +161,7 @@ header .navbar {
   .stain_two {
     position: relative;
     top: -250px;
-    left: 470px;
+    left: 770px;
     width: 500px;
     height: 500px;
     transform: translate(-20%, -20%) scale(0) ;
@@ -188,21 +191,12 @@ header .navbar {
   text-align: center; 
   position: relative;
   display: block; 
-}
-
-.section__subtitle {
-  text-align: center; 
-  padding-block: 2.5rem;
-  padding-bottom: 3.5rem;
-  position: relative;
-  display: block; 
+  font-size: 40px;
 }
 
 .projects__container {
-  max-width: 1024px;
-  margin: 0 auto;
-  overflow: visible;
-  position: relative;
+  display: block;
+  align-content: center;
 }
   
 .projects__content {
@@ -215,18 +209,19 @@ header .navbar {
 }
 
 .projects__img {
-  width: 250px;
+  width: 400px;
   border-radius: 0.75rem;
   margin-bottom: 1.25rem;
 }
 
 .projects__subtitle {
-  font-size: small;
-  color: #118b50;
+  font-size: 20px;
+  color: #5db996;
 }
 
 .projects__title {
-  font-size: large;
+  font-size: 50px;
+  color: #118B50;
   margin: 0.5rem 0 1.25rem;
 }
 
@@ -234,13 +229,13 @@ header .navbar {
   display: inline-flex;
   align-items: center;
   column-gap: 0.5rem;
-  color: #118b50;
-  font-size: small;
+  color: #5db996;
+  font-size: 20px;
   text-decoration: none;
 }
 
 .projects__button i {
-  font-size: 1rem;
+  font-size: 20px;
   transition: transform 0.3s;
 }
 
@@ -260,14 +255,74 @@ header .navbar {
 }
 
 .delay-1 {
-    transition-delay: 0.2s;
+    transition-delay: 0.1s;
 }
 .delay-2 {
-    transition-delay: 0.4s;
+    transition-delay: 0.2s;
 }
 .delay-3 {
-    transition-delay: 0.6s;
+    transition-delay: 0.3s;
 }
 .delay-4 {
-    transition-delay: 0.8s;
+    transition-delay: 0.4s;
+}
+
+/* ------------------- Footer ------------------- */
+
+.footer{ 
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+footer__container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
+.footer__content {
+  display: grid;
+  row-gap: 1.5rem;
+  }
+
+.footer__links h1 {
+  margin: 0;
+  font-size: 1.5rem; 
+  color: #118b50;
+  display: inline-block;
+  font-weight: 600;
+}
+
+.footer__links a {
+  color: #118b50;       
+  text-decoration: none; 
+  transition: color 0.3s ease;
+}
+.footer__links a:hover {
+  color: #0a6134;      
+}
+
+
+.footer__copy {
+  display: block;
+  margin-top: 1rem; 
+  color: #666;          
+  font-size: 0.875rem; 
+}
+
+.footer__links h1 a.funny {
+  font-weight: bold;
+  border-bottom: 1px dashed #118b50; 
+  padding-bottom: 2px;
+}
+
+.footer.slide-in-up {
+  transform: translateY(50px); 
+  opacity: 0;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.footer.slide-in-up.show {
+  transform: translateY(0);
+  opacity: 1;
 }
