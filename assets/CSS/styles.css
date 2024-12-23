@@ -6,6 +6,10 @@
     margin: 0;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background-color: #fbf6e9;
 }
@@ -18,11 +22,6 @@ a {
     text-decoration: none;
 }
 
-section-content{
-    margin: 0 auto;
-    padding: 0 20px;
-    max-width: max-content;
-}
 
 /* Navbar Styling */
 
@@ -33,10 +32,13 @@ header {
 }
 
 header .navbar {
+    opacity: 0;
     display: flex;
     padding: 20px;
     align-items: center;
     justify-content: space-between;
+    transition: transform 0.3s ease, opacity .3s ease;
+    transform: translateY(-100%)
 }
 
 .navbar .nav-menu{
@@ -64,18 +66,21 @@ header .navbar {
     color: #118B50;
 }
 
+.navbar.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
 /* Header Styling */
 
-.hero-section { 
-    min-height: 100vh;
-}
 
 .hero-section .section-content{ 
     display: flex;
-    align-items: center;
     min-height: 100vh;
+    align-items: center;
     color: #5db996;
     justify-content: space-between;
+
 }
 
 .title{
@@ -106,7 +111,6 @@ header .navbar {
     padding-left: 380px;
     font-size: 50px;
     display: inline-block;
-    line-height: .9;
     font-size: semi-bold;
     opacity: 0;
     animation: slideInRight .3s ease-out forwards;
@@ -123,7 +127,7 @@ header .navbar {
     }
     }
 
-
+    
 /* ------------------ Stain Element --------------------- */
 .stain_one {
     position: relative;
@@ -179,77 +183,91 @@ header .navbar {
 
 
   /* ============ PROJECT ============== */
-  .proejcts__container{
-    overflow: initial;
-  }
-
-  .projects__content{
-    display: grid;
-    justify-content: center;
-  }
-
-  .projects__img{ 
-    width: 250px;
-    border-radius: .75rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .projects__subtitle{ 
-    font-size: small;
-    color: #118b50;
-  }
-
-  .projects__title{ 
-    font-size: large;
-    margin-bottom: 1.25rem;
-    margin: .5rem 0 1.25rem;
-  }
-
-  .projects__button{
-    display: inline-flex;
-    align-items: center;
-    column-gap: .5rem;
-    color: #118b50;
-    font-size: small;
-  }
-
-  .projects__button i{
-    font-size: 1rem;
-    transition: transform .3s;
-  }
-
-  .projects__button:hover i{ 
-    transform: translateX(.25rem);
-  }
-
-.projects__container .swiper-button-prev::after, 
-.projects__container .swiper-button-next::after{
-    content: ' ';
+  .section__title {
+  margin-top: -500px;
+  text-align: center; 
+  position: relative;
+  display: block; 
 }
 
-.projects__container .swiper-button-prev, 
-.projects__container .swiper-button-next{
-    width: initial;
-    height: initial;
-    margin: initial;
-    font-size: 2.5rem;
-    color: #118b50;
+.section__subtitle {
+  text-align: center; 
+  padding-block: 2.5rem;
+  padding-bottom: 3.5rem;
+  position: relative;
+  display: block; 
 }
 
-.projects__container .swiper-button-prev{
-    left: -1rem;
-    right: 4.5rem;
+.projects__container {
+  max-width: 1024px;
+  margin: 0 auto;
+  overflow: visible;
+  position: relative;
+}
+  
+.projects__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center; 
+  justify-content: center;
+  padding: 2rem 1rem; 
 }
 
-.projects__container .swiper-button-slide{
-    margin-bottom: 4.5rem;
+.projects__img {
+  width: 250px;
+  border-radius: 0.75rem;
+  margin-bottom: 1.25rem;
 }
 
-.projects__container .swiper-pagination-bullets{
-    bottom: 0;
-    opacity: inherit;
+.projects__subtitle {
+  font-size: small;
+  color: #118b50;
 }
 
-.projects__container .swiper-pagination-active{
-    bottom: 0;
+.projects__title {
+  font-size: large;
+  margin: 0.5rem 0 1.25rem;
+}
+
+.projects__button {
+  display: inline-flex;
+  align-items: center;
+  column-gap: 0.5rem;
+  color: #118b50;
+  font-size: small;
+  text-decoration: none;
+}
+
+.projects__button i {
+  font-size: 1rem;
+  transition: transform 0.3s;
+}
+
+.projects__button:hover i {
+  transform: translateX(0.25rem);
+}
+
+.fade-in-right {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in-right.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.delay-1 {
+    transition-delay: 0.2s;
+}
+.delay-2 {
+    transition-delay: 0.4s;
+}
+.delay-3 {
+    transition-delay: 0.6s;
+}
+.delay-4 {
+    transition-delay: 0.8s;
 }
