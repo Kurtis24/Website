@@ -32,39 +32,39 @@ header {
 }
 
 header .navbar {
-    opacity: 0;
-    display: flex;
-    padding: 20px;
-    align-items: center;
-    justify-content: space-between;
-    transition: transform 0.3s ease, opacity .3s ease;
-    transform: translateY(-100%)
+  opacity: 0;
+  display: flex;
+  padding: 20px;
+  align-items: center;
+  justify-content: space-between;
+  transition: transform 0.3s ease, opacity .3s ease;
+  transform: translateY(-100%)
 }
 
 .navbar .nav-menu{
-    display: flex;
-    padding: 20px;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  padding: 20px;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .navbar .nav-logo .logo-text { 
-    color: black;
-    font-size: 20px;
-    font-weight: 800;
-    padding: 10px 18px;
+  color: black;
+  font-size: 20px;
+  font-weight: 800;
+  padding: 10px 18px;
 }
 
 .navbar .nav-menu .nav-link{
-    padding: 10px 18px;
-    font-size: 20px;
-    font-weight: bold;
-    transition: 0.3s ease;
-    color: black;
+  padding: 10px 18px;
+  font-size: 20px;
+  font-weight: bold;
+  transition: 0.3s ease;
+  color: black;
 }
 
 .navbar .nav-menu .nav-link:hover{
-    color: #118B50;
+  color: #118B50;
 }
 
 .navbar.show {
@@ -279,7 +279,6 @@ footer__container {
   margin: 0 auto;
 }
 
-
 .footer__content {
   display: grid;
   row-gap: 1.5rem;
@@ -298,10 +297,10 @@ footer__container {
   text-decoration: none; 
   transition: color 0.3s ease;
 }
+
 .footer__links a:hover {
   color: #0a6134;      
 }
-
 
 .footer__copy {
   display: block;
@@ -325,4 +324,73 @@ footer__container {
 .footer.slide-in-up.show {
   transform: translateY(0);
   opacity: 1;
+}
+
+/*Second page */
+
+.workpage-navbar {
+  display: flex;
+  padding: 30px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-text{
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.logo-text:hover{
+  color: #118B50;
+}
+
+.nav-link{
+  font-size: 20px;
+  color: black;
+  font-weight: bold;
+}
+
+.nav-link:hover{
+  color: #118B50;
+}
+
+.work-text { 
+  display: flex;
+  padding-left: 200px;
+  padding-right: 200px;
+  padding-top: 520px;
+  margin-bottom: -350px;
+  text-align: center;
+  color: #0a6134;
+}
+
+.replace{
+  position: absolute;
+  display: flex;
+  margin-top: -250px;
+  margin-left: 630px;
+  width: 300px;
+  z-index: 1;
+  height: 200px;
+  opacity: 0.8;
+  
+}
+
+.image_work {
+  position: relative;
+  display: flex;
+  margin: 0 auto;
+  z-index: 2;
+  width: 300px;
+}
+
+
+.footer .slide-in-up .workpage{
+  display: flex;
+}
+
+.footer__links{
+  margin-top: 350px;
+  text-align: center;
 }
