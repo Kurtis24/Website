@@ -1,0 +1,667 @@
+@import "tailwindcss";
+
+/* Apple-inspired design system */
+:root {
+  --apple-bg: #f5f5f7;
+  --apple-text: #1d1d1f;
+  --apple-accent: #0071e3;
+  --apple-gray: #86868b;
+  --apple-light: #f9f9f9;
+  --apple-border: #e0e0e0;
+  --apple-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --apple-shadow-light: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+@theme inline {
+  --color-background: var(--apple-bg);
+  --color-foreground: var(--apple-text);
+  --color-accent: var(--apple-accent);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--apple-bg);
+  color: var(--apple-text);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar - Apple style */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--apple-text);
+}
+
+p {
+  line-height: 1.7;
+  color: var(--apple-gray);
+}
+
+/* Button styles */
+.btn {
+  background: var(--apple-accent);
+  color: #F3FFE5;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn:hover {
+  background: #005bd3;
+  transform: translateY(-1px);
+  box-shadow: var(--apple-shadow);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--apple-accent);
+  border: 1px solid var(--apple-accent);
+}
+
+.btn-secondary:hover {
+  background: var(--apple-accent);
+  color: #F3FFE5;
+}
+
+/* Card styles */
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: var(--apple-shadow);
+  border: 1px solid var(--apple-border);
+}
+
+/* Section spacing - simplified */
+.section {
+  padding: 80px 0;
+}
+
+.section:first-child {
+  padding-top: 100px;
+}
+
+/* Utility classes */
+.text-large {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+.text-medium {
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+}
+
+.text-small {
+  font-size: clamp(0.9rem, 2vw, 1rem);
+}
+
+/* Mouse trail canvas */
+canvas {
+  filter: blur(0.5px);
+}
+
+/* Simplified animations */
+.fade-in {
+  animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Button hover effects */
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 113, 227, 0.3);
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Minimal text styling */
+h1, h2, h3 {
+  letter-spacing: -0.025em;
+  font-weight: 600;
+}
+
+p {
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* Custom cursor */
+body {
+  cursor: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Parallax hero styles */
+.parallax-hero {
+  perspective: 1000px;
+}
+
+.parallax-layer {
+  will-change: transform;
+}
+
+.parallax-layer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Smooth transitions for all parallax elements */
+.transition-transform {
+  transition: transform 0.1s ease-out;
+}
+
+/* Ensure images load properly */
+.parallax-layer {
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.cursor-trail {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(0, 113, 227, 0.3);
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  transition: transform 0.1s ease;
+}
+
+.cursor-trail:hover {
+  transform: scale(1.5);
+}
+
+/* Scroll indicator animation */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 2s infinite;
+}
+
+/* Enhanced text shadow for better readability */
+.parallax-text {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Parallax text styling */
+.drop-shadow-2xl {
+  filter: drop-shadow(0 25px 25px rgba(0, 0, 0, 0.8));
+}
+
+.drop-shadow-lg {
+  filter: drop-shadow(0 10px 8px rgba(0, 0, 0, 0.6));
+}
+
+/* Ensure images are properly loaded and displayed */
+.parallax-layer {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Enhanced parallax text styling */
+.parallax-name {
+  font-size: clamp(7rem, 28vw, 24rem);
+  line-height: 0.8;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  color: #F3FFE5;
+  filter: contrast(1.1) brightness(1.1);
+  z-index: 15;
+  text-align: center;
+  white-space: nowrap;
+  transform: translateX(4ch);
+  display: inline-block;
+}
+
+.parallax-subtitle {
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  font-weight: 300;
+  color: #F3FFE5;
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.7),
+    0 4px 8px rgba(0, 0, 0, 0.5);
+  z-index: 15;
+}
+
+/* Ensure proper layering */
+.z-15 {
+  z-index: 15;
+}
+
+.z-25 {
+  z-index: 25;
+}
+
+/* Text entrance animation */
+@keyframes textGrow {
+  0% {
+    transform: scale(0.05);
+    opacity: 0;
+    filter: blur(15px) brightness(0.3);
+  }
+  25% {
+    transform: scale(0.3);
+    opacity: 0.5;
+    filter: blur(8px) brightness(0.6);
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+    filter: blur(2px) brightness(1.1);
+  }
+  75% {
+    transform: scale(0.95);
+    opacity: 0.95;
+    filter: blur(0.5px) brightness(1.05);
+  }
+  90% {
+    transform: scale(1.02);
+    opacity: 1;
+    filter: blur(0) brightness(1.02);
+  }
+  95% {
+    transform: scale(0.99);
+    opacity: 1;
+    filter: blur(0) brightness(0.99);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    filter: blur(0) brightness(1);
+  }
+}
+
+@keyframes subtitleFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.8);
+    filter: blur(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.text-entrance {
+  animation: textGrow 3s cubic-bezier(0.23, 1, 0.32, 1) 0.3s both;
+  position: relative;
+}
+
+.text-entrance::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0;
+  animation: glow 3s ease-out 0.3s both;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes glow {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  50% {
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(1.5);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2);
+  }
+}
+
+.subtitle-entrance {
+  animation: subtitleFadeIn 2s cubic-bezier(0.23, 1, 0.32, 1) 2.5s both;
+}
+
+/* Simple pop-up animation */
+@keyframes simplePopUp {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Scroll-based animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.8s ease-out both;
+}
+
+.scale-in {
+  animation: scaleIn 0.6s ease-out both;
+}
+
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+
+/* Project card hover effects */
+.project-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(147, 51, 234, 0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.project-card:hover::before {
+  opacity: 1;
+}
+
+/* Smooth section transitions */
+.section-transition {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced button styles */
+.btn-enhanced {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  border: none;
+  padding: 16px 32px;
+  border-radius: 12px;
+  color: #F3FFE5;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+
+.btn-enhanced:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6);
+}
+
+.btn-enhanced::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-enhanced:hover::before {
+  left: 100%;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .parallax-name {
+    font-size: clamp(7rem, 32vw, 18rem);
+  }
+
+  .parallax-subtitle {
+    font-size: clamp(2.4rem, 8vw, 4rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .parallax-name {
+    font-size: clamp(6rem, 24vw, 14rem);
+  }
+
+  .parallax-subtitle {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+}
+
+/* Loading state for images */
+.parallax-layer {
+  position: relative;
+}
+
+/* Rounded border effect for sections */
+.section-transition {
+  position: relative;
+  overflow: hidden;
+}
+
+.section-transition::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 24px;
+  padding: 3px;
+  background: linear-gradient(135deg,
+    rgba(59, 130, 246, 0.6),
+    rgba(147, 51, 234, 0.6),
+    rgba(16, 185, 129, 0.6),
+    rgba(59, 130, 246, 0.6)
+  );
+  background-size: 300% 300%;
+  animation: gradientShift 3s ease infinite;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.section-transition.active::before {
+  opacity: 1;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Enhanced project cards for blurred background */
+.project-card-enhanced {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+/* Features section text styling */
+.features-section p {
+  color: #F3FFE5 !important;
+}
+
+.features-section .project-card-enhanced p {
+  color: #F3FFE5 !important;
+}
+
+.features-section h2 {
+  color: #F3FFE5 !important;
+}
+
+.project-card-enhanced:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(59, 130, 246, 0.5);
+  transform: translateY(-4px) scale(1.02);
+}
+
+/* Smooth section transitions */
+.section-container {
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Scroll progress indicator */
+.scroll-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  border-radius: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.progress-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.progress-dot.active {
+  background: #3b82f6;
+  transform: scale(1.3);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+}
+
+.progress-dot.completed {
+  background: rgba(59, 130, 246, 0.8);
+}
+
+/* Enhanced overlay content animations */
+.overlay-content {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Improved blur transition for hero */
+.hero-blur-container {
+  will-change: filter, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.parallax-layer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, #000 25%, transparent 25%),
+              linear-gradient(-45deg, #000 25%, transparent 25%),
+              linear-gradient(45deg, transparent 75%, #000 75%),
+              linear-gradient(-45deg, transparent 75%, #000 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.parallax-layer.loaded::before {
+  opacity: 0;
+}
+
