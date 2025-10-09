@@ -265,7 +265,7 @@ body {
 
 /* Enhanced parallax text styling */
 .parallax-name {
-  font-size: clamp(7rem, 28vw, 24rem);
+  font-size: clamp(7rem, 18vw, 21rem);
   line-height: 0.8;
   font-weight: 900;
   letter-spacing: -0.05em;
@@ -274,8 +274,9 @@ body {
   z-index: 15;
   text-align: center;
   white-space: nowrap;
-  transform: translateX(4ch);
-  display: inline-block;
+  display: block;
+  width: 100%;
+  max-width: 1000vw;
 }
 
 .parallax-subtitle {
