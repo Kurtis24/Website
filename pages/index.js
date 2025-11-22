@@ -309,25 +309,6 @@ export default function Home() {
                     </a>
                   </div>
                 </div>
-
-                <div className="grid grid-cols-2 gap-6">
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Experience</h3>
-                    <p className="text-gray-600">2+ Years</p>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Projects</h3>
-                    <p className="text-gray-600">30+</p>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Skills</h3>
-                    <p className="text-gray-600">Design, Development, AI</p>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Location</h3>
-                    <p className="text-gray-600">San Francisco, CA (I wish)</p>
-                  </div>
-                </div>
               </div>
 
               <div className="relative">
