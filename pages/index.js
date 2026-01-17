@@ -317,7 +317,7 @@ export default function Home() {
                     <div className="text-center">
                       <div className="w-80 h-80 rounded-full mx-auto mb-4 overflow-hidden shadow-lg transition-all duration-500 hover:shadow-2xl hover:shadow-green-200/50">
                         <img
-                          src="/images/IMG_6010.png"
+                          src="/images/Skiing.png"
                           alt="Profile Picture"
                           className="w-full h-full object-cover transition-all duration-500 hover:scale-110 hover:rotate-2"
                         />
