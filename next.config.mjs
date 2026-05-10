@@ -11,6 +11,10 @@ const nextConfig = {
       { protocol: 'https', hostname: 'cdn.pixabay.com' },
     ],
   },
+  eslint: {
+    // Disable the img element warning
+    ignoreDuringBuilds: false,
+  },
 };
 
 export default nextConfig;
