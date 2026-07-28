@@ -3,14 +3,22 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Apple-inspired design system */
+/* Dark theme design system */
 :root {
-  --apple-bg: #f5f5f7;
-  --apple-text: #1d1d1f;
-  --apple-accent: #0071e3;
-  --apple-gray: #86868b;
-  --apple-light: #f9f9f9;
-  --apple-border: #e0e0e0;
+  --apple-bg: #070a09;
+  --apple-text: #ececec;
+  --apple-accent: #74c69d;
+  --apple-gray: #a8aaa9;
+  --apple-light: #111111;
+  --apple-border: rgba(255, 255, 255, 0.1);
+
+  /* Shared page background: same base colour on every page */
+  --site-bg: var(--apple-bg);
+  --site-tint: 116, 198, 157; /* accent green */
+  --site-tint-cool: 74, 124, 150; /* cool teal */
+  --glass-bg: rgba(255, 255, 255, 0.045);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --panel-solid: #0b0f0e;
   --apple-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   --apple-shadow-light: 0 2px 10px rgba(0, 0, 0, 0.04);
   --radius: 0.625rem;
@@ -118,12 +126,12 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.3);
 }
 
 /* Custom scrollbar for experience section */
@@ -231,11 +239,6 @@ p {
   font-size: clamp(0.9rem, 2vw, 1rem);
 }
 
-/* Mouse trail canvas */
-canvas {
-  filter: blur(0.5px);
-}
-
 /* Simplified animations */
 .fade-in {
   animation: fadeIn 1s ease-out;
@@ -274,9 +277,7 @@ p {
   line-height: 1.6;
 }
 
-/* Custom cursor */
 body {
-  cursor: none;
   margin: 0;
   padding: 0;
 }
@@ -307,22 +308,6 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-}
-
-.cursor-trail {
-  position: fixed;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: rgba(0, 113, 227, 0.3);
-  pointer-events: none;
-  z-index: 9999;
-  mix-blend-mode: difference;
-  transition: transform 0.1s ease;
-}
-
-.cursor-trail:hover {
-  transform: scale(1.5);
 }
 
 /* Scroll indicator animation */
@@ -564,54 +549,147 @@ body {
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Photo 2 slide up animation */
-@keyframes slideUpPhoto {
-  0% {
-    transform: translateY(50px);
-    opacity: 0.7;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
+/* Intro overlay - "Hi, my name is Kurtis" */
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at center, #161616 0%, #000000 70%);
+  transition: opacity 0.9s cubic-bezier(0.23, 1, 0.32, 1),
+              transform 0.9s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.photo2-slide-up {
-  animation: slideUpPhoto 3s ease-out forwards;
-}
-
-/* Dust particle effect */
-.dust-container {
-  overflow: hidden;
-}
-
-.dust-particle {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.7);
-  border-radius: 50%;
+.intro-overlay-exit {
+  opacity: 0;
+  transform: scale(1.15);
   pointer-events: none;
-  animation: dustFloat 3s ease-out forwards;
-  box-shadow: 0 0 3px rgba(255, 255, 255, 0.9);
 }
 
-@keyframes dustFloat {
+.intro-content {
+  text-align: center;
+  padding: 0 24px;
+}
+
+.intro-line-hi {
+  font-size: clamp(4rem, 12vw, 9rem);
+  font-weight: 900;
+  line-height: 1;
+  color: #F3FFE5;
+  letter-spacing: -0.04em;
+}
+
+.intro-line-name {
+  margin-top: 16px;
+  font-size: clamp(1.8rem, 5vw, 3.5rem);
+  font-weight: 600;
+  color: rgba(243, 255, 229, 0.9);
+  letter-spacing: -0.02em;
+  display: flex;
+  justify-content: center;
+  gap: 0.4em;
+  flex-wrap: wrap;
+}
+
+.intro-word {
+  display: inline-block;
+  opacity: 0;
+  animation: introWordPop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.intro-word-accent {
+  color: #74c69d;
+  font-weight: 800;
+}
+
+@keyframes introWordPop {
   0% {
     opacity: 0;
-    transform: translateY(0) translateX(0) scale(0);
+    transform: scale(0.3) translateY(24px);
+    filter: blur(8px);
   }
-  20% {
+  70% {
     opacity: 1;
-    transform: translateY(-20px) translateX(10px) scale(1);
-  }
-  80% {
-    opacity: 0.8;
-    transform: translateY(-100px) translateX(-20px) scale(0.8);
+    transform: scale(1.08) translateY(-3px);
+    filter: blur(0);
   }
   100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+.intro-skip-hint {
+  position: absolute;
+  bottom: 32px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.8rem;
+  color: rgba(243, 255, 229, 0.45);
+  letter-spacing: 0.05em;
+  opacity: 0;
+  animation: introWordPop 0.6s ease 2.4s forwards;
+}
+
+/* Project detail modal */
+.project-modal-backdrop {
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: modalBackdropIn 0.25s ease-out;
+}
+
+.project-modal-panel {
+  animation: modalPanelIn 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes modalBackdropIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalPanelIn {
+  from {
     opacity: 0;
-    transform: translateY(-150px) translateX(30px) scale(0);
+    transform: translateY(40px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Hero name reveal after intro finishes */
+@keyframes heroReveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.85) translateY(30px);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
   }
 }
 
@@ -720,11 +798,14 @@ body {
 
 /* Enhanced project cards for blurred background */
 .project-card-enhanced {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid var(--glass-border);
   border-radius: 16px;
+  box-shadow:
+    0 20px 50px -30px rgba(0, 0, 0, 0.85),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
   transition: all 0.3s ease;
 }
 
@@ -742,8 +823,8 @@ body {
 }
 
 .project-card-enhanced:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(59, 130, 246, 0.5);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(var(--site-tint), 0.5);
   transform: translateY(-4px) scale(1.02);
 }
 
@@ -815,6 +896,119 @@ body {
 
 .parallax-layer.loaded::before {
   opacity: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Shared site background
+   Every page sits on the same fixed base colour + gradient wash,
+   so sections only need to be translucent on top of it.
+   ───────────────────────────────────────────────────────────── */
+.site-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-color: var(--site-bg);
+}
+
+/* Soft off-centre glows, all pulled from the accent family */
+.site-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(62rem 44rem at 6% -14%, rgba(var(--site-tint), 0.3), transparent 66%),
+    radial-gradient(50rem 38rem at 96% 4%, rgba(var(--site-tint-cool), 0.28), transparent 62%),
+    radial-gradient(70rem 50rem at 44% 108%, rgba(var(--site-tint), 0.2), transparent 68%),
+    radial-gradient(140% 110% at 50% 45%, transparent 42%, rgba(0, 0, 0, 0.38) 100%);
+}
+
+/* Variant: faint grid on top of the wash */
+.site-bg-mesh::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(120% 90% at 50% 0%, #000 10%, transparent 75%);
+  -webkit-mask-image: radial-gradient(120% 90% at 50% 0%, #000 10%, transparent 75%);
+}
+
+/* Variant: hero photo, blurred right down into an abstract wash.
+   z-index -1 keeps it under the gradient glows so it stays tinted, not grey. */
+.site-bg-photo::after {
+  content: '';
+  position: absolute;
+  inset: -8%;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(7, 10, 9, 0.42), rgba(7, 10, 9, 0.68)),
+    url(/images/Photo_1_web.png);
+  background-size: cover;
+  background-position: center;
+  filter: blur(90px) saturate(120%);
+  opacity: 0.85;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Glass surfaces
+   ───────────────────────────────────────────────────────────── */
+.glass-panel {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  box-shadow:
+    0 30px 80px -40px rgba(0, 0, 0, 0.9),
+    inset 0 1px 0 rgba(255, 255, 255, 0.055);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  box-shadow:
+    0 20px 50px -30px rgba(0, 0, 0, 0.85),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.075);
+  border-color: rgba(var(--site-tint), 0.5);
+  transform: translateY(-4px);
+}
+
+/* Blog post prose */
+.post-body > section + section {
+  margin-top: 2.75rem;
+}
+
+.post-body h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #95d5b2;
+  margin-bottom: 1rem;
+}
+
+.post-body p {
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  color: #cfd3d1;
+}
+
+.post-body p + p {
+  margin-top: 1.25rem;
+}
+
+/* Inset well inside a glass panel (e.g. the portrait tile) */
+.glass-inset {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.015) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .dark {
