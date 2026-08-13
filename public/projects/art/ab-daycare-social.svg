@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-label="A&amp;B Daycare">
+  <defs>
+    <linearGradient id="tile-s" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4fc3f7" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#0c2f42" stop-opacity="0.95" />
+    </linearGradient>
+    <linearGradient id="wash-s" x1="0" y1="0" x2="0.85" y2="1">
+      <stop offset="0%" stop-color="#0c2f42" stop-opacity="0.85" />
+      <stop offset="70%" stop-color="#0b0f0e" stop-opacity="1" />
+    </linearGradient>
+    <radialGradient id="glow-s" cx="0.12" cy="0" r="1">
+      <stop offset="0%" stop-color="#4fc3f7" stop-opacity="0.3" />
+      <stop offset="60%" stop-color="#4fc3f7" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid-s" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#bde8fb" stroke-opacity="0.1" stroke-width="1" />
+    </pattern>
+  </defs>
+    <rect width="1280" height="640" fill="#0b0f0e" />
+    <rect width="1280" height="640" fill="url(#wash-s)" />
+    <rect width="1280" height="640" fill="url(#glow-s)" />
+    <rect width="1280" height="640" fill="url(#grid-s)" />
+    <rect x="120" y="116" width="116" height="116" rx="34.8"
+      fill="url(#tile-s)" stroke="#bde8fb" stroke-opacity="0.22" stroke-width="1.39" />
+    <g transform="translate(136.24 132.24) scale(0.8700)">
+      <ellipse fill="#071c28" opacity="0.45" cx="48" cy="89" rx="32" ry="5.12" />
+      <rect fill="#bce8fc" x="11" y="12" width="74" height="72" rx="9" />
+      <rect fill="#4fc3f7" x="18" y="19" width="60" height="46" rx="6" />
+      <circle fill="#bde8fb" cx="65" cy="30" r="7" />
+      <circle fill="#bce8fc" cx="36" cy="44" r="10" />
+      <circle fill="#bde8fb" cx="56" cy="47" r="9" />
+      <circle fill="#071c28" cx="33" cy="43" r="1.9" />
+      <circle fill="#071c28" cx="40" cy="43" r="1.9" />
+      <circle fill="#071c28" cx="53" cy="46" r="1.8" />
+      <circle fill="#071c28" cx="59" cy="46" r="1.8" />
+      <rect fill="#4fc3f7" opacity="0.55" x="26" y="72" width="34" height="5" rx="2.5" />
+      <path fill="#bde8fb" d="M80 61.5Q81.17 64.83 84.5 66Q81.17 67.17 80 70.5Q78.83 67.17 75.5 66Q78.83 64.83 80 61.5Z" />
+    </g>
+    <text x="120" y="292" font-family="Nunito, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="5.6" fill="#bde8fb">PRIVATE DAYCARE PHOTOS</text>
+    <text x="120" y="368" font-family="Nunito, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="76" font-weight="800" fill="#ffffff">A&amp;B Daycare</text>
+    <text x="120" y="424" font-family="Nunito, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="30" font-weight="500" fill="#c9d1ce">A photo sharing portal for a daycare, built for a real client.</text>
+    <text x="120" y="548" font-family="Nunito, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="600" letter-spacing="1.6" fill="#8f9a96">JavaScript  •  Client work</text>
+    <text x="120" y="598" font-family="Nunito, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="1.2" fill="#6f7a76">github.com/Kurtis24/A-B-Daycare</text>
+    <rect x="0" y="634" width="1280" height="6" fill="#4fc3f7" fill-opacity="0.85" />
+</svg>

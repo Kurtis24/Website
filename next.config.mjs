@@ -11,10 +11,9 @@ const nextConfig = {
       { protocol: 'https', hostname: 'cdn.pixabay.com' },
     ],
   },
-  eslint: {
-    // Disable the img element warning
-    ignoreDuringBuilds: false,
-  },
+  // Two lockfiles exist (here and one directory up), so pin the root rather
+  // than let Next guess and warn on every build.
+  outputFileTracingRoot: import.meta.dirname,
 };
 
 export default nextConfig;

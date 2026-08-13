@@ -2,8 +2,33 @@
 
 import Head from "next/head";
 import Link from "next/link";
+import katex from "katex";
 import Navbar from "@/components/Navbar";
 import { blogPosts } from "@/lib/blog";
+
+// Render inline math wrapped in $...$ to KaTeX HTML at build time
+function renderInlineMath(text) {
+  return text.replace(/\$([^$]+)\$/g, (_, expr) =>
+    katex.renderToString(expr, { throwOnError: false, displayMode: false })
+  );
+}
+
+function renderDisplayMath(expr) {
+  return katex.renderToString(expr, { throwOnError: false, displayMode: true });
+}
+
+// Turn each section's body entries into { kind, html } so the page can render them
+function precomputeSections(sections) {
+  return sections.map((section) => ({
+    heading: section.heading,
+    body: section.body.map((item) => {
+      if (typeof item === "string") {
+        return { kind: "p", html: renderInlineMath(item) };
+      }
+      return { kind: "math", html: renderDisplayMath(item.math) };
+    })
+  }));
+}
 
 export async function getStaticPaths() {
   return {
@@ -14,11 +39,12 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const index = blogPosts.findIndex((post) => post.slug === params.slug);
+  const post = blogPosts[index];
 
   // Posts are newest first, so the previous entry is the newer one
   return {
     props: {
-      post: blogPosts[index],
+      post: { ...post, sections: precomputeSections(post.sections) },
       newer: blogPosts[index - 1] ?? null,
       older: blogPosts[index + 1] ?? null
     }
@@ -96,9 +122,17 @@ export default function BlogPostPage({ post, newer, older }) {
               {post.sections.map((section) => (
                 <section key={section.heading}>
                   <h2>{section.heading}</h2>
-                  {section.body.map((paragraph, i) => (
-                    <p key={i}>{paragraph}</p>
-                  ))}
+                  {section.body.map((item, i) =>
+                    item.kind === "math" ? (
+                      <div
+                        key={i}
+                        className="post-math"
+                        dangerouslySetInnerHTML={{ __html: item.html }}
+                      />
+                    ) : (
+                      <p key={i} dangerouslySetInnerHTML={{ __html: item.html }} />
+                    )
+                  )}
                 </section>
               ))}
             </div>

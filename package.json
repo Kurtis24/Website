@@ -6,23 +6,17 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "art": "node scripts/generate-project-art.mjs",
+    "art:publish": "node scripts/publish-repo-art.mjs"
   },
   "dependencies": {
-    "@react-three/drei": "^10.7.3",
-    "@react-three/fiber": "^9.3.0",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
     "framer-motion": "^12.23.12",
-    "gsap": "^3.14.2",
-    "lucide-react": "^0.563.0",
+    "katex": "^0.18.4",
     "next": "^16.2.6",
     "ogl": "^1.0.11",
     "react": "^19.2.6",
-    "react-dom": "^19.2.6",
-    "react-icons": "^5.5.0",
-    "tailwind-merge": "^3.4.0",
-    "three": "^0.179.1"
+    "react-dom": "^19.2.6"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
