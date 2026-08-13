@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="A&amp;B Daycare logo">
+  <defs>
+    <linearGradient id="tile-i" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4fc3f7" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#0c2f42" stop-opacity="0.95" />
+    </linearGradient>
+    <linearGradient id="wash-i" x1="0" y1="0" x2="0.85" y2="1">
+      <stop offset="0%" stop-color="#0c2f42" stop-opacity="0.85" />
+      <stop offset="70%" stop-color="#0b0f0e" stop-opacity="1" />
+    </linearGradient>
+    <radialGradient id="glow-i" cx="0.12" cy="0" r="1">
+      <stop offset="0%" stop-color="#4fc3f7" stop-opacity="0.3" />
+      <stop offset="60%" stop-color="#4fc3f7" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid-i" width="64" height="64" patternUnits="userSpaceOnUse">
+      <path d="M64 0H0V64" fill="none" stroke="#bde8fb" stroke-opacity="0.1" stroke-width="1" />
+    </pattern>
+  </defs>
+    <rect width="512" height="512" rx="112" fill="#0b0f0e" />
+    <rect width="512" height="512" rx="112" fill="url(#wash-i)" />
+    <rect width="512" height="512" rx="112" fill="url(#glow-i)" />
+    <rect width="512" height="512" rx="112" fill="url(#grid-i)" />
+    <g transform="translate(112 112) scale(3.0000)">
+      <ellipse fill="#071c28" opacity="0.45" cx="48" cy="89" rx="32" ry="5.12" />
+      <rect fill="#bce8fc" x="11" y="12" width="74" height="72" rx="9" />
+      <rect fill="#4fc3f7" x="18" y="19" width="60" height="46" rx="6" />
+      <circle fill="#bde8fb" cx="65" cy="30" r="7" />
+      <circle fill="#bce8fc" cx="36" cy="44" r="10" />
+      <circle fill="#bde8fb" cx="56" cy="47" r="9" />
+      <circle fill="#071c28" cx="33" cy="43" r="1.9" />
+      <circle fill="#071c28" cx="40" cy="43" r="1.9" />
+      <circle fill="#071c28" cx="53" cy="46" r="1.8" />
+      <circle fill="#071c28" cx="59" cy="46" r="1.8" />
+      <rect fill="#4fc3f7" opacity="0.55" x="26" y="72" width="34" height="5" rx="2.5" />
+      <path fill="#bde8fb" d="M80 61.5Q81.17 64.83 84.5 66Q81.17 67.17 80 70.5Q78.83 67.17 75.5 66Q78.83 64.83 80 61.5Z" />
+    </g>
+</svg>

@@ -601,16 +601,10 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="border-t border-white/10 mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-              <p className="text-gray-500 text-sm">
+            <div className="border-t border-white/10 mt-10 pt-6">
+              <p className="text-gray-500 text-sm text-center sm:text-left">
                 © 2026 Kurtis Lin. Built with some cups of coffee
               </p>
-              <a
-                href="#"
-                className="text-sm text-gray-500 hover:text-green-300 transition-colors duration-300"
-              >
-                Back to top ↑
-              </a>
             </div>
           </div>
         </footer>

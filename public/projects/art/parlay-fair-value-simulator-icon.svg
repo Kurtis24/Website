@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Parlay Fair Value Simulator logo">
+  <defs>
+    <linearGradient id="tile-i" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ff6fae" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#45102c" stop-opacity="0.95" />
+    </linearGradient>
+    <linearGradient id="wash-i" x1="0" y1="0" x2="0.85" y2="1">
+      <stop offset="0%" stop-color="#45102c" stop-opacity="0.85" />
+      <stop offset="70%" stop-color="#0b0f0e" stop-opacity="1" />
+    </linearGradient>
+    <radialGradient id="glow-i" cx="0.12" cy="0" r="1">
+      <stop offset="0%" stop-color="#ff6fae" stop-opacity="0.3" />
+      <stop offset="60%" stop-color="#ff6fae" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid-i" width="64" height="64" patternUnits="userSpaceOnUse">
+      <path d="M64 0H0V64" fill="none" stroke="#ffc2da" stroke-opacity="0.1" stroke-width="1" />
+    </pattern>
+  </defs>
+    <rect width="512" height="512" rx="112" fill="#0b0f0e" />
+    <rect width="512" height="512" rx="112" fill="url(#wash-i)" />
+    <rect width="512" height="512" rx="112" fill="url(#glow-i)" />
+    <rect width="512" height="512" rx="112" fill="url(#grid-i)" />
+    <g transform="translate(112 112) scale(3.0000)">
+      <ellipse fill="#290a1a" opacity="0.45" cx="46" cy="90" rx="28" ry="4.48" />
+      <rect fill="#ff6fae" x="17" y="10" width="62" height="76" rx="11" />
+      <rect fill="#ffc8e0" opacity="0.8" x="27" y="16" width="26" height="5" rx="2.5" />
+      <rect fill="#ffc8e0" x="23" y="26" width="50" height="54" rx="6" />
+      <circle fill="#ff6fae" cx="32" cy="38" r="4.4" />
+      <path fill="none" stroke="#ffc8e0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M29.8 38.2 31.4 40l3.2-3.8" />
+      <rect fill="#45102c" opacity="0.32" x="40" y="35" width="26" height="5" rx="2.5" />
+      <circle fill="#ff6fae" cx="32" cy="52" r="4.4" />
+      <path fill="none" stroke="#ffc8e0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M29.8 52.2 31.4 54l3.2-3.8" />
+      <rect fill="#45102c" opacity="0.32" x="40" y="49" width="21" height="5" rx="2.5" />
+      <circle fill="#ff6fae" cx="32" cy="66" r="4.4" />
+      <path fill="none" stroke="#ffc8e0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M29.8 66.2 31.4 68l3.2-3.8" />
+      <rect fill="#45102c" opacity="0.32" x="40" y="63" width="17" height="5" rx="2.5" />
+      <circle fill="#ffc2da" cx="74" cy="73" r="13" />
+      <path fill="none" stroke="#45102c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M69 68 79 78M79 68 69 78" />
+      <path fill="#ffc2da" d="M85 15Q86.3 18.7 90 20Q86.3 21.3 85 25Q83.7 21.3 80 20Q83.7 18.7 85 15Z" />
+    </g>
+</svg>

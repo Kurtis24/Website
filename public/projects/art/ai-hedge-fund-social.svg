@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-label="AI Hedge Fund">
+  <defs>
+    <linearGradient id="tile-s" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#9ede4f" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#1e2f10" stop-opacity="0.95" />
+    </linearGradient>
+    <linearGradient id="wash-s" x1="0" y1="0" x2="0.85" y2="1">
+      <stop offset="0%" stop-color="#1e2f10" stop-opacity="0.85" />
+      <stop offset="70%" stop-color="#0b0f0e" stop-opacity="1" />
+    </linearGradient>
+    <radialGradient id="glow-s" cx="0.12" cy="0" r="1">
+      <stop offset="0%" stop-color="#9ede4f" stop-opacity="0.3" />
+      <stop offset="60%" stop-color="#9ede4f" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid-s" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#d8f2ae" stroke-opacity="0.1" stroke-width="1" />
+    </pattern>
+  </defs>
+    <rect width="1280" height="640" fill="#0b0f0e" />
+    <rect width="1280" height="640" fill="url(#wash-s)" />
+    <rect width="1280" height="640" fill="url(#glow-s)" />
+    <rect width="1280" height="640" fill="url(#grid-s)" />
+    <rect x="120" y="116" width="116" height="116" rx="34.8"
+      fill="url(#tile-s)" stroke="#d8f2ae" stroke-opacity="0.22" stroke-width="1.39" />
+    <g transform="translate(136.24 132.24) scale(0.8700)">
+      <ellipse fill="#121c0a" opacity="0.45" cx="48" cy="88" rx="32" ry="5.12" />
+      <rect fill="#daf2bc" x="11" y="20" width="74" height="62" rx="9" />
+      <rect fill="#1e2f10" x="19" y="28" width="36" height="7" rx="3.5" />
+      <rect fill="#1e2f10" opacity="0.45" x="19" y="41" width="26" height="4.5" rx="2.2" />
+      <rect fill="#1e2f10" opacity="0.45" x="19" y="51" width="31" height="4.5" rx="2.2" />
+      <path fill="none" stroke="#9ede4f" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" d="M20 72 35 57l10 8 16-20" />
+      <circle fill="#d8f2ae" cx="62" cy="44" r="7" />
+      <rect fill="#9ede4f" opacity="0.5" x="62" y="62" width="16" height="16" rx="5" />
+      <path fill="#d8f2ae" d="M78 20.5Q79.43 24.57 83.5 26Q79.43 27.43 78 31.5Q76.57 27.43 72.5 26Q76.57 24.57 78 20.5Z" />
+    </g>
+    <text x="120" y="292" font-family="Nunito, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="5.6" fill="#d8f2ae">CHARTS PLUS THE NEWS</text>
+    <text x="120" y="368" font-family="Nunito, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="76" font-weight="800" fill="#ffffff">AI Hedge Fund</text>
+    <text x="120" y="424" font-family="Nunito, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="30" font-weight="500" fill="#c9d1ce">A project that combines price signals and news analysis for</text>
+    <text x="120" y="464" font-family="Nunito, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="30" font-weight="500" fill="#c9d1ce">trade ideas.</text>
+    <text x="120" y="548" font-family="Nunito, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="600" letter-spacing="1.6" fill="#8f9a96">Python  •  Research</text>
+    <text x="120" y="598" font-family="Nunito, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="1.2" fill="#6f7a76">github.com/Kurtis24/AI-HedgeFund</text>
+    <rect x="0" y="634" width="1280" height="6" fill="#9ede4f" fill-opacity="0.85" />
+</svg>

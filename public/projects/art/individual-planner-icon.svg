@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Individual Planner logo">
+  <defs>
+    <linearGradient id="tile-i" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffc94d" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#40300a" stop-opacity="0.95" />
+    </linearGradient>
+    <linearGradient id="wash-i" x1="0" y1="0" x2="0.85" y2="1">
+      <stop offset="0%" stop-color="#40300a" stop-opacity="0.85" />
+      <stop offset="70%" stop-color="#0b0f0e" stop-opacity="1" />
+    </linearGradient>
+    <radialGradient id="glow-i" cx="0.12" cy="0" r="1">
+      <stop offset="0%" stop-color="#ffc94d" stop-opacity="0.3" />
+      <stop offset="60%" stop-color="#ffc94d" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid-i" width="64" height="64" patternUnits="userSpaceOnUse">
+      <path d="M64 0H0V64" fill="none" stroke="#ffe6a8" stroke-opacity="0.1" stroke-width="1" />
+    </pattern>
+  </defs>
+    <rect width="512" height="512" rx="112" fill="#0b0f0e" />
+    <rect width="512" height="512" rx="112" fill="url(#wash-i)" />
+    <rect width="512" height="512" rx="112" fill="url(#glow-i)" />
+    <rect width="512" height="512" rx="112" fill="url(#grid-i)" />
+    <g transform="translate(112 112) scale(3.0000)">
+      <ellipse fill="#261d06" opacity="0.45" cx="46" cy="89" rx="30" ry="4.8" />
+      <rect fill="#261d06" x="28" y="6" width="7" height="14" rx="3.5" />
+      <rect fill="#261d06" x="55" y="6" width="7" height="14" rx="3.5" />
+      <rect fill="#ffc94d" x="15" y="13" width="60" height="70" rx="11" />
+      <rect fill="#ffeabb" x="22" y="26" width="46" height="50" rx="6" />
+      <rect fill="#40300a" x="28" y="56" width="8" height="14" rx="3" />
+      <rect fill="#40300a" x="41" y="47" width="8" height="23" rx="3" />
+      <rect fill="#40300a" x="54" y="38" width="8" height="32" rx="3" />
+      <circle fill="#ffe6a8" cx="76" cy="71" r="12" />
+      <circle fill="none" stroke="#40300a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" cx="76" cy="71" r="7" />
+      <path fill="#ffe6a8" d="M82 19Q83.3 22.7 87 24Q83.3 25.3 82 29Q80.7 25.3 77 24Q80.7 22.7 82 19Z" />
+    </g>
+</svg>

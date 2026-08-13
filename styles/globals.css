@@ -982,6 +982,191 @@ body {
   transform: translateY(-4px);
 }
 
+/* ─────────────────────────────────────────────────────────────
+   Project cards + landing pages
+   Each card sets --brand-accent inline from lib/projectArt.js
+   ───────────────────────────────────────────────────────────── */
+.project-card-title {
+  transition: color 0.3s ease;
+}
+
+.project-card:hover .project-card-title {
+  color: var(--brand-accent, #74c69d);
+}
+
+.project-card:hover {
+  border-color: color-mix(in srgb, var(--brand-from) 45%, transparent);
+}
+
+/* ── Brand-driven surfaces ─────────────────────────────────────────────
+   A card or page sets --brand-from / --brand-to / --brand-accent once and
+   everything below derives from it with color-mix, so no colour value is
+   repeated in JSX. Override --glow / --tint for a softer panel. */
+.brand-surface {
+  --glow: 20%;
+  --tint: 72%;
+  background-color: var(--panel-solid);
+  background-image:
+    radial-gradient(
+      115% 130% at 10% 0%,
+      color-mix(in srgb, var(--brand-from) var(--glow), transparent) 0%,
+      transparent 58%
+    ),
+    linear-gradient(
+      140deg,
+      color-mix(in srgb, var(--brand-to) var(--tint), transparent) 0%,
+      var(--panel-solid) 68%
+    );
+}
+
+.brand-surface-soft {
+  --glow: 13%;
+  --tint: 48%;
+}
+
+.brand-grid {
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--brand-accent) 11%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--brand-accent) 11%, transparent) 1px, transparent 1px);
+  background-size: var(--grid-size, 22px) var(--grid-size, 22px);
+}
+
+.brand-text {
+  color: var(--brand-accent);
+}
+
+/* Pill used for tech tags and the live-demo button */
+.brand-pill {
+  color: var(--brand-accent);
+  background: color-mix(in srgb, var(--brand-from) 9%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand-accent) 20%, transparent);
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.brand-pill:hover {
+  background: color-mix(in srgb, var(--brand-from) 16%, transparent);
+  border-color: color-mix(in srgb, var(--brand-accent) 34%, transparent);
+}
+
+/* Numbered step marker in "How it works" */
+.brand-step {
+  color: var(--brand-accent);
+  background: color-mix(in srgb, var(--brand-from) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand-accent) 20%, transparent);
+}
+
+/* The logo tile. --logo-size drives every dimension. */
+.project-logo {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--logo-size);
+  height: var(--logo-size);
+  border-radius: calc(var(--logo-size) * 0.3);
+  background: linear-gradient(
+    150deg,
+    color-mix(in srgb, var(--brand-from) 25%, transparent) 0%,
+    color-mix(in srgb, var(--brand-to) 87%, transparent) 100%
+  );
+  border: 1px solid color-mix(in srgb, var(--brand-accent) 22%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--brand-accent) 15%, transparent),
+    0 10px 26px -14px color-mix(in srgb, var(--brand-from) 50%, transparent);
+}
+
+/* Badged over a screenshot, so it needs to stay legible on light pixels */
+.project-logo-badge {
+  background: linear-gradient(
+    150deg,
+    color-mix(in srgb, var(--brand-from) 35%, transparent) 0%,
+    color-mix(in srgb, var(--panel-solid) 93%, transparent) 100%
+  );
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.project-hero {
+  animation: projectHeroIn 0.5s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+@keyframes projectHeroIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Project illustrations ──────────────────────────────────────────────
+   Applied by <ProjectMark />. The prefers-reduced-motion block further down
+   flattens all of these, so no separate opt-out is needed here. */
+.mark-drift {
+  animation: markDrift 5.5s ease-in-out infinite;
+}
+
+.mark-twinkle,
+.mark-beat {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.mark-twinkle {
+  animation: markTwinkle 2.6s ease-in-out infinite;
+}
+
+.mark-beat {
+  animation: markBeat 1.9s ease-in-out infinite;
+}
+
+@keyframes markDrift {
+  0%,
+  100% {
+    transform: translateY(-1.5%);
+  }
+  50% {
+    transform: translateY(1.5%);
+  }
+}
+
+@keyframes markTwinkle {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.72) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.12) rotate(45deg);
+  }
+}
+
+@keyframes markBeat {
+  0%,
+  70%,
+  100% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1.16);
+  }
+  40% {
+    transform: scale(1.04);
+  }
+}
+
+/* Section labels on a project landing page take the project's own colour */
+.project-section-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--brand-accent, #74c69d);
+}
+
 /* Blog post prose */
 .post-body > section + section {
   margin-top: 2.75rem;
@@ -1002,6 +1187,16 @@ body {
 
 .post-body p + p {
   margin-top: 1.25rem;
+}
+
+.post-body .post-math {
+  margin: 1.75rem 0;
+  overflow-x: auto;
+  color: #e6e9e7;
+}
+
+.post-body .post-math .katex {
+  font-size: 1.05rem;
 }
 
 /* Inset well inside a glass panel (e.g. the portrait tile) */

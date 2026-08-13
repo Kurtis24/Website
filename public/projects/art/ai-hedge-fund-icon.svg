@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="AI Hedge Fund logo">
+  <defs>
+    <linearGradient id="tile-i" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#9ede4f" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#1e2f10" stop-opacity="0.95" />
+    </linearGradient>
+    <linearGradient id="wash-i" x1="0" y1="0" x2="0.85" y2="1">
+      <stop offset="0%" stop-color="#1e2f10" stop-opacity="0.85" />
+      <stop offset="70%" stop-color="#0b0f0e" stop-opacity="1" />
+    </linearGradient>
+    <radialGradient id="glow-i" cx="0.12" cy="0" r="1">
+      <stop offset="0%" stop-color="#9ede4f" stop-opacity="0.3" />
+      <stop offset="60%" stop-color="#9ede4f" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid-i" width="64" height="64" patternUnits="userSpaceOnUse">
+      <path d="M64 0H0V64" fill="none" stroke="#d8f2ae" stroke-opacity="0.1" stroke-width="1" />
+    </pattern>
+  </defs>
+    <rect width="512" height="512" rx="112" fill="#0b0f0e" />
+    <rect width="512" height="512" rx="112" fill="url(#wash-i)" />
+    <rect width="512" height="512" rx="112" fill="url(#glow-i)" />
+    <rect width="512" height="512" rx="112" fill="url(#grid-i)" />
+    <g transform="translate(112 112) scale(3.0000)">
+      <ellipse fill="#121c0a" opacity="0.45" cx="48" cy="88" rx="32" ry="5.12" />
+      <rect fill="#daf2bc" x="11" y="20" width="74" height="62" rx="9" />
+      <rect fill="#1e2f10" x="19" y="28" width="36" height="7" rx="3.5" />
+      <rect fill="#1e2f10" opacity="0.45" x="19" y="41" width="26" height="4.5" rx="2.2" />
+      <rect fill="#1e2f10" opacity="0.45" x="19" y="51" width="31" height="4.5" rx="2.2" />
+      <path fill="none" stroke="#9ede4f" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" d="M20 72 35 57l10 8 16-20" />
+      <circle fill="#d8f2ae" cx="62" cy="44" r="7" />
+      <rect fill="#9ede4f" opacity="0.5" x="62" y="62" width="16" height="16" rx="5" />
+      <path fill="#d8f2ae" d="M78 20.5Q79.43 24.57 83.5 26Q79.43 27.43 78 31.5Q76.57 27.43 72.5 26Q76.57 24.57 78 20.5Z" />
+    </g>
+</svg>
