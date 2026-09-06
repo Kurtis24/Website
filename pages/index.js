@@ -21,6 +21,9 @@ export default function Home() {
   const [windowHeight, setWindowHeight] = useState(1000);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [introDone, setIntroDone] = useState(false);
+  // One-time nudge of the hero photo layers, so the depth between them reads
+  // before anyone has touched the mouse.
+  const [layerNudge, setLayerNudge] = useState(0);
 
   useEffect(() => {
     setIsClient(true);
@@ -97,6 +100,33 @@ export default function Home() {
     };
   }, []);
 
+  // Rock the two hero photos apart once the intro clears. The layers travel by
+  // different amounts, which is what makes them read as separate planes rather
+  // than one flat picture.
+  useEffect(() => {
+    if (!introDone || typeof window === 'undefined') return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    let raf;
+    let start;
+    const DURATION = 2600;
+
+    const tick = (now) => {
+      if (start === undefined) start = now;
+      const t = (now - start) / DURATION;
+      if (t >= 1) {
+        setLayerNudge(0);
+        return;
+      }
+      // Two and a half swings, damped to nothing.
+      setLayerNudge(Math.sin(t * Math.PI * 5) * (1 - t) ** 2);
+      raf = requestAnimationFrame(tick);
+    };
+
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [introDone]);
+
   // Experience scroll fade effect
   useEffect(() => {
     const handleExperienceScroll = () => {
@@ -154,30 +184,6 @@ export default function Home() {
       }
     };
   }, []);
-
-  const projects = [
-    {
-      title: "Scam-mah",
-      description: `When a call looks like a scam, AI picks up as a grandma and keeps the caller on the line so the real person does not have to.`,
-      image: "images/Scam-mah.png",
-      tech: ["Next.js", "Tailwind CSS", "TypeScript"],
-      link: "https://devpost.com/software/scam-mah"
-    },
-    {
-      title: "Urban Sentinel",
-      description: `A tool for city planners that uses LightGBM on Toronto neighborhood data to flag areas that may be at risk of decline. Placed 2nd out of 300+ teams.`,
-      image: "images/UrbanSentinel.png",
-      tech: ["React", "TypeScript", "Python", "FastAPI"],
-      link: "https://devpost.com/software/urban-sentinel"
-    },
-    {
-      title: "Arbittron",
-      description: `A calculator that finds price gaps across sportsbooks and figures out stake sizes so the outcome does not matter for the locked return.`,
-      image: "images/Arbitron.png",
-      tech: ["React", "Python", "PyTorch", "Three.js"],
-      link: "https://devpost.com/software/arbittron"
-    }
-  ];
 
   const experiences = [
     {
@@ -249,11 +255,15 @@ export default function Home() {
   const blurAmount = heroProgress * 40;
   const heroOpacity = 1 - heroProgress * 0.85;
 
-  // Very subtle mouse movement - gentle parallax
-  const backgroundMoveX = mousePosition.x * 2; // Very subtle: 2px max movement
-  const backgroundMoveY = mousePosition.y * 2;
-  const foregroundMoveX = mousePosition.x * 3; // Slightly more: 3px max movement
-  const foregroundMoveY = mousePosition.y * 3;
+  // Parallax. The layers are scaled up a touch below so there is overscan to
+  // travel into, otherwise sliding them would expose the edges of the frame.
+  const backgroundMoveX = mousePosition.x * 7 + layerNudge * 11;
+  const backgroundMoveY = mousePosition.y * 5 + layerNudge * 3;
+  const foregroundMoveX = mousePosition.x * 19 + layerNudge * 30;
+  const foregroundMoveY = mousePosition.y * 12 + layerNudge * 8;
+  // The nudge drives its own frames, so the smoothing transition has to stand
+  // down while it runs or it would flatten the motion into a slow drift.
+  const layerTransition = layerNudge !== 0 ? '0ms' : undefined;
 
   return (
     <div className="min-h-screen">
@@ -295,7 +305,8 @@ export default function Home() {
               backgroundRepeat: 'no-repeat',
               backgroundAttachment: 'fixed',
               opacity: 0.8,
-              transform: `translate(${backgroundMoveX}px, ${backgroundMoveY}px)`,
+              transform: `translate(${backgroundMoveX}px, ${backgroundMoveY}px) scale(1.06)`,
+              transitionDuration: layerTransition,
             }}
           />
 
@@ -328,7 +339,8 @@ export default function Home() {
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
               backgroundAttachment: 'fixed',
-              transform: `translate(${foregroundMoveX}px, ${foregroundMoveY}px)`,
+              transform: `translate(${foregroundMoveX}px, ${foregroundMoveY}px) scale(1.1)`,
+              transitionDuration: layerTransition,
             }}
           />
 
@@ -351,196 +363,63 @@ export default function Home() {
               animation: introDone ? 'heroReveal 1.1s cubic-bezier(0.23, 1, 0.32, 1) 0.25s both' : 'none',
             }}
           >
-            Managment Engineering @ University of Waterloo
+            Engineering @ University of Waterloo
           </p>
-          <div
-            className="mt-10"
-            style={{
-              opacity: 0,
-              animation: introDone ? 'heroReveal 1.1s ease 0.65s both, bounce 2s 1.8s infinite' : 'none',
-            }}
-          >
-            <svg className="w-6 h-6 mx-auto" fill="none" stroke="#F3FFE5" strokeWidth={2} viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
-          </div>
+
         </section>
 
-        {/* Features Section */}
-        <section id="projects" className="min-h-screen flex items-center justify-center py-20 px-6 lg:px-8 features-section">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16 fade-in-up">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 drop-shadow-2xl">
-                Featured Projects
-              </h2>
-              <p className="text-xl max-w-2xl mx-auto drop-shadow-lg" style={{ color: '#F3FFE5' }}>
-                A selection of my recent work that showcases my design and development skills
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {projects.map((project, index) => (
-                <a
-                  key={index}
-                  href={project.link || '#'}
-                  target={project.link ? "_blank" : "_self"}
-                  rel={project.link ? "noopener noreferrer" : ""}
-                  className={`project-card-enhanced group relative p-6 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 fade-in-up ${
-                    index === 0 ? 'stagger-1' : index === 1 ? 'stagger-2' : 'stagger-3'
-                  } ${project.link ? 'cursor-pointer' : 'cursor-default'}`}
-                  style={{
-                    transitionDelay: `${index * 100}ms`
-                  }}
-                  onClick={(e) => {
-                    if (!project.link) {
-                      e.preventDefault();
-                    }
-                  }}
-                >
-                  <div className="aspect-video rounded-lg mb-4 relative overflow-hidden bg-gray-800">
-                    <img
-                      src={`/${project.image}`}
-                      alt={project.title}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        e.target.style.display = 'none';
-                        e.target.parentElement.innerHTML = `
-                          <div class="w-full h-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center">
-                            <span class="text-gray-400 text-lg">${project.title}</span>
-                          </div>
-                        `;
-                      }}
-                    />
-                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
-                  </div>
-                  <h3 className="text-xl font-bold mb-3 group-hover:text-green-300 transition-colors duration-300 drop-shadow-lg" style={{ color: '#F3FFE5' }}>
-                    {project.title}
-                  </h3>
-                  <p className="mb-4 leading-relaxed transition-colors duration-300" style={{ color: '#F3FFE5' }}>
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((tech, techIndex) => (
-                      <span
-                        key={techIndex}
-                        className="bg-white/20 text-xs px-3 py-1 rounded-full hover:bg-white/30 transition-colors duration-300 backdrop-blur-sm"
-                        style={{ color: '#F3FFE5' }}
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </a>
-              ))}
-            </div>
-
-            <div className="text-center mt-12">
-              <Link
-                href="/projects"
-                className="inline-block px-8 py-3 rounded-full font-semibold border border-white/30 bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-colors duration-300"
-                style={{ color: '#F3FFE5' }}
-              >
-                See all projects →
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* About Section */}
-        <section id="about" className="flex items-center justify-center py-20 px-6 lg:px-8">
+        {/* Experience + Blog */}
+        <section id="experience" className="flex items-center justify-center py-20 pb-24 px-6 lg:px-8">
           <div className="glass-panel w-full max-w-5xl mx-auto rounded-[32px] p-8 md:p-12 fade-in-up">
-            <div className="grid lg:grid-cols-2 gap-10 items-center">
-              <div className="space-y-4 fade-in-up">
-                <div>
-                  <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: '#95d5b2' }}>
-                    About Me
-                  </h2>
-                  <div className="space-y-4 text-gray-300 leading-relaxed">
-                    <p>
-                      I&apos;m a Management Engineering student at the University of Waterloo
-                      (Class of 2028). Right now I work on trading tools at Totalis (YC P26)
-                      and sports analytics models at WAT.ai.
-                    </p>
-                    <p>
-                      Previously I built ETL and analytics infrastructure at Analytic Partners
-                      and automated claims processing at Airfairness. Next up: Equitable Bank
-                      in Fall 2026.
-                    </p>
-                    <p>
-                      Fun fact: I play Varsity Ultimate Frisbee.
-                    </p>
-                  </div>
-
-                  {/* Experience Section */}
-                  <div className="mt-8">
-                    <h3 className="text-2xl font-bold mb-4" style={{ color: '#95d5b2' }}>
-                      Experience
-                    </h3>
-                    <div className="max-h-[300px] overflow-y-scroll pr-2 space-y-4 experience-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                      {experiences.map((exp, index) => (
-                        <div key={index} className="experience-item flex gap-4 items-start border-l-4 border-green-500 pl-4 py-2 transition-opacity duration-300">
-                          <div className={`w-12 h-12 flex-shrink-0 rounded-lg shadow-md flex items-center justify-center overflow-hidden p-1 ${exp.logo ? 'bg-white' : 'bg-green-500/15'}`}>
-                            {exp.logo ? (
-                              <img
-                                src={exp.logo}
-                                alt={exp.company}
-                                className="w-full h-full object-contain"
-                              />
-                            ) : (
-                              <span className="text-green-300 font-bold text-lg">{exp.initials}</span>
-                            )}
-                          </div>
-                          <div className="flex-grow">
-                            <h4 className="text-lg font-semibold text-gray-100">{exp.role}</h4>
-                            <p className="text-sm text-gray-300">{exp.company}</p>
-                            <p className="text-xs text-gray-400">{exp.dates}</p>
-                            {exp.detail && <p className="text-xs text-gray-400">{exp.detail}</p>}
-                          </div>
-                        </div>
-                      ))}
+            <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+              <div className="fade-in-up">
+                <h2 className="text-3xl md:text-4xl font-bold mb-6" style={{ color: '#95d5b2' }}>
+                  Experience
+                </h2>
+                <div className="max-h-[320px] overflow-y-scroll pr-2 space-y-4 experience-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                  {experiences.map((exp, index) => (
+                    <div key={index} className="experience-item flex gap-4 items-start border-l-4 border-green-500 pl-4 py-2 transition-opacity duration-300">
+                      <div className={`w-12 h-12 flex-shrink-0 rounded-lg shadow-md flex items-center justify-center overflow-hidden ${exp.logo ? 'bg-white' : 'bg-green-500/15'}`}>
+                        {exp.logo ? (
+                          <img
+                            src={exp.logo}
+                            alt={exp.company}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <span className="text-green-300 font-bold text-lg">{exp.initials}</span>
+                        )}
+                      </div>
+                      <div className="flex-grow">
+                        <h4 className="text-lg font-semibold text-gray-100">{exp.role}</h4>
+                        <p className="text-sm text-gray-300">{exp.company}</p>
+                        <p className="text-xs text-gray-400">{exp.dates}</p>
+                        {exp.detail && <p className="text-xs text-gray-400">{exp.detail}</p>}
+                      </div>
                     </div>
-                    <p className="text-xs text-gray-400 mt-2 text-center">Scroll to see more experiences</p>
-                  </div>
+                  ))}
                 </div>
+                <p className="text-xs text-gray-400 mt-2 text-center">Scroll to see more experiences</p>
               </div>
 
-              <div className="relative">
-                <div className="glass-inset aspect-square rounded-3xl overflow-hidden shadow-2xl">
-                  <div className="w-full h-full flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="w-48 h-48 md:w-80 md:h-80 rounded-full mx-auto mb-4 overflow-hidden shadow-lg transition-all duration-500 hover:shadow-2xl hover:shadow-green-200/50 p-2">
-                        <img
-                          src="/images/profile.jpeg"
-                          alt="Kurtis Lin"
-                          className="w-full h-full object-cover transition-all duration-500 hover:scale-110 hover:rotate-2"
-                          style={{ objectPosition: 'center 30%', transform: 'scale(1.3)' }}
-                        />
-                      </div>
-                      <p className="text-gray-300 font-medium">Kurtis Lin</p>
-                      <p className="text-gray-400 text-sm">Software Engineer · UWaterloo</p>
-                    </div>
-                  </div>
+              <div className="text-center fade-in-up">
+                <div className="w-48 h-48 md:w-64 md:h-64 rounded-full mx-auto mb-6 overflow-hidden shadow-lg transition-all duration-500 hover:shadow-2xl hover:shadow-green-200/50 p-2">
+                  <img
+                    src="/images/profile.jpeg"
+                    alt="Kurtis Lin"
+                    className="w-full h-full object-cover transition-all duration-500 hover:scale-110 hover:rotate-2"
+                    style={{ objectPosition: 'center 30%', transform: 'scale(1.3)' }}
+                  />
                 </div>
+                <p className="text-gray-200 font-semibold text-lg">Kurtis Lin</p>
+                <p className="mt-4 text-sm text-gray-400 leading-relaxed text-left max-w-sm mx-auto">
+                  I&apos;m a Management Engineering student at the University of Waterloo,
+                  Class of 2028. Right now I build trading tools and fraud checks at Totalis
+                  (YC P26) and sports analytics models at WAT.ai, and I join Equitable Bank
+                  in Fall 2026.
+                </p>
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* Blog CTA */}
-        <section className="pb-24 px-6 lg:px-8">
-          <div className="glass-panel max-w-5xl mx-auto rounded-[32px] py-14 px-8 text-center">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: '#95d5b2' }}>
-              Blog
-            </h2>
-            <p className="text-xl text-gray-300 mb-8">
-              Notes on projects I have worked on, what I built, and what I learned
-            </p>
-            <Link
-              href="/blog"
-              className="inline-block px-8 py-3 rounded-full font-semibold border border-green-400/40 bg-green-400/10 text-green-300 hover:bg-green-400/20 transition-colors duration-300"
-            >
-              Read the blog →
-            </Link>
           </div>
         </section>
 
@@ -556,15 +435,27 @@ export default function Home() {
                 <p className="text-gray-300 leading-relaxed mb-6 max-w-sm">
                   Always happy to chat about software, internships, or ultimate frisbee.
                 </p>
-                <a
-                  href="mailto:jh7lin@uwaterloo.ca"
-                  className="inline-flex items-center gap-2.5 px-5 py-3 rounded-full font-medium border border-green-400/40 bg-green-400/10 text-green-300 hover:bg-green-400/20 transition-colors duration-300"
-                >
-                  <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                  jh7lin@uwaterloo.ca
-                </a>
+                <div className="flex flex-wrap items-center gap-3">
+                  <a
+                    href="mailto:jh7lin@uwaterloo.ca"
+                    className="inline-flex items-center gap-2.5 px-5 py-3 rounded-full font-medium border border-green-400/40 bg-green-400/10 text-green-300 hover:bg-green-400/20 transition-colors duration-300"
+                  >
+                    <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    jh7lin@uwaterloo.ca
+                  </a>
+                  <Link
+                    href="/blog"
+                    className="inline-flex items-center gap-2.5 px-5 py-3 rounded-full font-medium border border-white/15 bg-white/[0.04] text-gray-200 hover:bg-white/[0.09] hover:border-green-400/40 transition-colors duration-300"
+                  >
+                    <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                      <path d="M4 19.5V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2Z" />
+                      <path d="M8 7h7M8 11h7" />
+                    </svg>
+                    Read the blog
+                  </Link>
+                </div>
               </div>
 
               {/* Right: elsewhere */}
