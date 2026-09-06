@@ -2,10 +2,9 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
-import ProjectLogo, { ProjectMark, brandVars } from "@/components/ProjectLogo";
+import ProjectLogo, { brandVars } from "@/components/ProjectLogo";
 import { githubRepos } from "@/lib/projects";
 import { getArt } from "@/lib/projectArt";
-import { languageColors } from "@/lib/languageColors";
 
 export async function getStaticPaths() {
   return {
@@ -25,14 +24,6 @@ export async function getStaticProps({ params }) {
       next: githubRepos[index + 1] ?? null
     }
   };
-}
-
-function Chip({ children }) {
-  return (
-    <span className="inline-flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.08] text-gray-300">
-      {children}
-    </span>
-  );
 }
 
 function NavCard({ project, direction }) {
@@ -60,7 +51,6 @@ function NavCard({ project, direction }) {
 export default function ProjectLandingPage({ project, prev, next }) {
   const { brand } = getArt(project.slug);
   const howItWorks = project.howItWorks || [];
-  const highlights = project.highlights || [];
 
   return (
     <div className="relative z-10 min-h-screen" style={brandVars(brand)}>
@@ -110,24 +100,6 @@ export default function ProjectLandingPage({ project, prev, next }) {
               <p className="mt-7 text-base sm:text-lg text-gray-300 leading-relaxed max-w-2xl">
                 {project.summary}
               </p>
-
-              <div className="mt-7 flex flex-wrap items-center gap-2.5">
-                {project.language && (
-                  <Chip>
-                    <span
-                      className="w-2 h-2 rounded-full"
-                      style={{ background: languageColors[project.language] || "#9ca3af" }}
-                    />
-                    {project.language}
-                  </Chip>
-                )}
-                {project.kind && <Chip>{project.kind}</Chip>}
-                {project.stars > 0 && <Chip>★ {project.stars}</Chip>}
-                <Chip>
-                  <span className="text-gray-500">repo</span>
-                  <span className="font-mono text-[11px]">{project.name}</span>
-                </Chip>
-              </div>
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <a
@@ -192,59 +164,11 @@ export default function ProjectLandingPage({ project, prev, next }) {
               </section>
             )}
 
-            {highlights.length > 0 && (
-              <section>
-                <h2 className="project-section-label mb-6">Highlights</h2>
-                <div className="grid sm:grid-cols-2 gap-3">
-                  {highlights.map((item, i) => (
-                    <div
-                      key={i}
-                      className="rounded-xl border border-white/[0.07] px-4 py-3.5 text-sm text-gray-400 leading-relaxed"
-                    >
-                      <span className="brand-text mr-2">▹</span>
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {project.tech && (
-              <section>
-                <h2 className="project-section-label mb-6">Built with</h2>
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map((t) => (
-                    <span key={t} className="brand-pill text-sm px-3.5 py-1.5 rounded-full">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </section>
-            )}
           </div>
-
-          {/* Repo call to action */}
-          <section className="brand-surface brand-surface-soft mt-16 rounded-2xl border border-white/[0.08] p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center gap-5">
-            <ProjectMark slug={project.slug} size={44} className="flex-shrink-0" />
-            <div className="flex-grow">
-              <p className="text-lg font-semibold text-white">Read the code</p>
-              <p className="text-sm text-gray-400 mt-1">
-                {project.name} is public on GitHub, issues and forks welcome.
-              </p>
-            </div>
-            <a
-              href={project.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-shrink-0 px-5 py-2.5 rounded-full text-sm font-semibold bg-white text-black hover:bg-gray-200 transition-colors"
-            >
-              Open repo ↗
-            </a>
-          </section>
 
           {/* Prev / next */}
           {(prev || next) && (
-            <nav className="mt-8 grid sm:grid-cols-2 gap-4">
+            <nav className="mt-16 grid sm:grid-cols-2 gap-4">
               {prev ? <NavCard project={prev} direction="prev" /> : <span className="hidden sm:block" />}
               {next && <NavCard project={next} direction="next" />}
             </nav>

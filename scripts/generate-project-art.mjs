@@ -135,7 +135,10 @@ function socialSvg(project) {
     ...wrap(project.summary, 62).map((line, i) => text(424 + i * 40, 30, 500, "#c9d1ce", line)),
     [project.language, project.kind].filter(Boolean).length &&
       text(548, 26, 600, "#8f9a96", [project.language, project.kind].filter(Boolean).join("  •  "), 1.6),
-    text(h - 42, 24, 600, "#6f7a76", `github.com/Kurtis24/${project.name}`, 1.2),
+    project.name
+      ? text(h - 42, 24, 600, "#6f7a76", `github.com/Kurtis24/${project.name}`, 1.2)
+      : project.homepage &&
+        text(h - 42, 24, 600, "#6f7a76", project.homepage.replace(/^https?:\/\//, ""), 1.2),
   ].filter(Boolean);
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(project.title)}">

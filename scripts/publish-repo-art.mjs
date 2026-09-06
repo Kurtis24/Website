@@ -221,7 +221,8 @@ function buildReadme(project, existing, landingUrl) {
 
 /* ── run ────────────────────────────────────────────────────────────────── */
 
-const targets = githubRepos.filter((p) => all || !p.homepage);
+// Projects with no `name` have no public repo, so there is nothing to push to.
+const targets = githubRepos.filter((p) => p.name && (all || !p.homepage));
 console.log(
   `${targets.length} repo(s)${all ? "" : ", skipping projects that already have a live demo"}` +
     `${keepReadme ? ", banner only" : ""}${dryRun ? " [dry run]" : ""}\n`
