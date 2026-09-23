@@ -2,9 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
-import ProjectLogo, { brandVars } from "@/components/ProjectLogo";
 import { githubRepos } from "@/lib/projects";
-import { getArt } from "@/lib/projectArt";
 
 export async function getStaticPaths() {
   return {
@@ -33,9 +31,7 @@ function NavCard({ project, direction }) {
       className={`glass-card project-card rounded-2xl px-5 py-4 flex items-center gap-4 ${
         direction === "next" ? "sm:flex-row-reverse sm:text-right" : ""
       }`}
-      style={brandVars(getArt(project.slug).brand)}
     >
-      <ProjectLogo slug={project.slug} size={40} />
       <div className="min-w-0">
         <p className="text-[11px] uppercase tracking-[0.18em] text-gray-500">
           {direction === "prev" ? "Previous" : "Next"}
@@ -49,11 +45,10 @@ function NavCard({ project, direction }) {
 }
 
 export default function ProjectLandingPage({ project, prev, next }) {
-  const { brand } = getArt(project.slug);
   const howItWorks = project.howItWorks || [];
 
   return (
-    <div className="relative z-10 min-h-screen" style={brandVars(brand)}>
+    <div className="relative z-10 min-h-screen">
       <Head>
         <title>{`${project.title}, Kurtis Lin`}</title>
         <meta name="description" content={project.summary} />
@@ -83,19 +78,14 @@ export default function ProjectLandingPage({ project, prev, next }) {
             <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#0b0f0e] to-transparent pointer-events-none" />
 
             <div className="relative px-6 sm:px-10 pt-10 pb-9">
-              <div className="flex items-start gap-5">
-                <ProjectLogo slug={project.slug} size={72} />
-                <div className="min-w-0 pt-1">
-                  {project.tagline && (
-                    <p className="brand-text text-[11px] font-semibold uppercase tracking-[0.22em] mb-2">
-                      {project.tagline}
-                    </p>
-                  )}
-                  <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight leading-[1.1]">
-                    {project.title}
-                  </h1>
-                </div>
-              </div>
+              {project.tagline && (
+                <p className="brand-text text-[11px] font-semibold uppercase tracking-[0.22em] mb-2">
+                  {project.tagline}
+                </p>
+              )}
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight leading-[1.1]">
+                {project.title}
+              </h1>
 
               <p className="mt-7 text-base sm:text-lg text-gray-300 leading-relaxed max-w-2xl">
                 {project.summary}

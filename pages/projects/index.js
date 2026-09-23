@@ -2,9 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import ProjectCover from "@/components/ProjectCover";
-import { brandVars } from "@/components/ProjectLogo";
 import { githubRepos } from "@/lib/projects";
-import { getArt } from "@/lib/projectArt";
 
 const iconClass =
   "relative z-20 inline-flex items-center justify-center w-8 h-8 rounded-full text-gray-400 hover:text-white hover:bg-white/[0.08] transition-colors";
@@ -58,7 +56,7 @@ export default function ProjectsPage() {
           </div>
 
           <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: "#95d5b2" }}>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-accent">
               All Projects
             </h1>
             <p className="text-lg text-gray-400 max-w-2xl mx-auto">
@@ -71,9 +69,8 @@ export default function ProjectsPage() {
               <div
                 key={repo.slug}
                 className="glass-card project-card group relative rounded-2xl overflow-hidden flex flex-col"
-                style={brandVars(getArt(repo.slug).brand)}
               >
-                <div className="aspect-[2/1] overflow-hidden bg-white/[0.02]">
+                <div className="aspect-[2/1] overflow-hidden border-b border-white/[0.06]">
                   <ProjectCover repo={repo} />
                 </div>
                 <div className="p-6 flex flex-col gap-2.5 flex-grow">
@@ -106,7 +103,7 @@ export default function ProjectsPage() {
                         </a>
                       )}
                     </div>
-                    <span className="brand-text relative z-20 text-xs flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span className="text-accent relative z-20 text-xs flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       Open&nbsp;→
                     </span>
                   </div>

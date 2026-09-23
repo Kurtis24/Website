@@ -19,6 +19,9 @@
   --glass-bg: rgba(255, 255, 255, 0.045);
   --glass-border: rgba(255, 255, 255, 0.1);
   --panel-solid: #0b0f0e;
+  --brand-from: var(--apple-accent);
+  --brand-to: #0d1f19;
+  --brand-accent: var(--apple-accent);
   --apple-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   --apple-shadow-light: 0 2px 10px rgba(0, 0, 0, 0.04);
   --radius: 0.625rem;
@@ -988,6 +991,16 @@ body {
    ───────────────────────────────────────────────────────────── */
 .project-card-title {
   transition: color 0.3s ease;
+}
+
+/* Mini landing page shown on each project card */
+.project-preview {
+  background-color: var(--panel-solid);
+  background-image: radial-gradient(
+    90% 120% at 50% 0%,
+    rgba(var(--site-tint), 0.14) 0%,
+    transparent 60%
+  );
 }
 
 .project-card:hover .project-card-title {

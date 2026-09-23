@@ -373,13 +373,13 @@ export default function Home() {
           <div className="glass-panel w-full max-w-5xl mx-auto rounded-[32px] p-8 md:p-12 fade-in-up">
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
               <div className="fade-in-up">
-                <h2 className="text-3xl md:text-4xl font-bold mb-6" style={{ color: '#95d5b2' }}>
+                <h2 className="text-3xl md:text-4xl font-bold mb-6 text-accent">
                   Experience
                 </h2>
                 <div className="max-h-[320px] overflow-y-scroll pr-2 space-y-4 experience-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                   {experiences.map((exp, index) => (
-                    <div key={index} className="experience-item flex gap-4 items-start border-l-4 border-green-500 pl-4 py-2 transition-opacity duration-300">
-                      <div className={`w-12 h-12 flex-shrink-0 rounded-lg shadow-md flex items-center justify-center overflow-hidden ${exp.logo ? 'bg-white' : 'bg-green-500/15'}`}>
+                    <div key={index} className="experience-item flex gap-4 items-start border-l-4 border-accent pl-4 py-2 transition-opacity duration-300">
+                      <div className={`w-12 h-12 flex-shrink-0 rounded-lg shadow-md flex items-center justify-center overflow-hidden ${exp.logo ? 'bg-white' : 'bg-accent/15'}`}>
                         {exp.logo ? (
                           <img
                             src={exp.logo}
@@ -387,7 +387,7 @@ export default function Home() {
                             className="w-full h-full object-cover"
                           />
                         ) : (
-                          <span className="text-green-300 font-bold text-lg">{exp.initials}</span>
+                          <span className="text-accent font-bold text-lg">{exp.initials}</span>
                         )}
                       </div>
                       <div className="flex-grow">
@@ -403,7 +403,7 @@ export default function Home() {
               </div>
 
               <div className="text-center fade-in-up">
-                <div className="w-48 h-48 md:w-64 md:h-64 rounded-full mx-auto mb-6 overflow-hidden shadow-lg transition-all duration-500 hover:shadow-2xl hover:shadow-green-200/50 p-2">
+                <div className="w-48 h-48 md:w-64 md:h-64 rounded-full mx-auto mb-6 overflow-hidden shadow-lg transition-all duration-500 hover:shadow-2xl hover:shadow-accent/40 p-2">
                   <img
                     src="/images/profile.jpeg"
                     alt="Kurtis Lin"
@@ -429,7 +429,7 @@ export default function Home() {
             <div className="grid md:grid-cols-[1.2fr_1fr] gap-10 md:gap-12">
               {/* Left: the pitch */}
               <div>
-                <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: '#95d5b2' }}>
+                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-accent">
                   Let&apos;s connect
                 </h2>
                 <p className="text-gray-300 leading-relaxed mb-6 max-w-sm">
@@ -438,7 +438,7 @@ export default function Home() {
                 <div className="flex flex-wrap items-center gap-3">
                   <a
                     href="mailto:jh7lin@uwaterloo.ca"
-                    className="inline-flex items-center gap-2.5 px-5 py-3 rounded-full font-medium border border-green-400/40 bg-green-400/10 text-green-300 hover:bg-green-400/20 transition-colors duration-300"
+                    className="inline-flex items-center gap-2.5 px-5 py-3 rounded-full font-medium border border-accent/40 bg-accent/10 text-accent hover:bg-accent/20 transition-colors duration-300"
                   >
                     <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -447,7 +447,7 @@ export default function Home() {
                   </a>
                   <Link
                     href="/blog"
-                    className="inline-flex items-center gap-2.5 px-5 py-3 rounded-full font-medium border border-white/15 bg-white/[0.04] text-gray-200 hover:bg-white/[0.09] hover:border-green-400/40 transition-colors duration-300"
+                    className="inline-flex items-center gap-2.5 px-5 py-3 rounded-full font-medium border border-white/15 bg-white/[0.04] text-gray-200 hover:bg-white/[0.09] hover:border-accent/40 transition-colors duration-300"
                   >
                     <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
                       <path d="M4 19.5V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2Z" />
@@ -470,10 +470,10 @@ export default function Home() {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 hover:bg-white/[0.07] hover:border-green-400/40 transition-all duration-300"
+                      className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 hover:bg-white/[0.07] hover:border-accent/40 transition-all duration-300"
                     >
                       <svg
-                        className="w-5 h-5 flex-shrink-0 text-gray-400 group-hover:text-green-300 transition-colors duration-300"
+                        className="w-5 h-5 flex-shrink-0 text-gray-400 group-hover:text-accent transition-colors duration-300"
                         fill="currentColor"
                         viewBox="0 0 24 24"
                       >
@@ -483,7 +483,7 @@ export default function Home() {
                         <span className="block text-sm font-medium text-gray-200">{social.label}</span>
                         <span className="block text-xs text-gray-500 truncate">{social.handle}</span>
                       </span>
-                      <span className="text-gray-600 group-hover:text-green-300 group-hover:translate-x-0.5 transition-all duration-300">
+                      <span className="text-gray-600 group-hover:text-accent group-hover:translate-x-0.5 transition-all duration-300">
                         →
                       </span>
                     </a>
