@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Reality Editor logo">
+  <defs>
+    <linearGradient id="tile-i" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4fd37a" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#0d2b1a" stop-opacity="0.95" />
+    </linearGradient>
+    <linearGradient id="wash-i" x1="0" y1="0" x2="0.85" y2="1">
+      <stop offset="0%" stop-color="#0d2b1a" stop-opacity="0.85" />
+      <stop offset="70%" stop-color="#0b0f0e" stop-opacity="1" />
+    </linearGradient>
+    <radialGradient id="glow-i" cx="0.12" cy="0" r="1">
+      <stop offset="0%" stop-color="#4fd37a" stop-opacity="0.3" />
+      <stop offset="60%" stop-color="#4fd37a" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid-i" width="64" height="64" patternUnits="userSpaceOnUse">
+      <path d="M64 0H0V64" fill="none" stroke="#bdf0cc" stroke-opacity="0.1" stroke-width="1" />
+    </pattern>
+  </defs>
+    <rect width="512" height="512" rx="112" fill="#0b0f0e" />
+    <rect width="512" height="512" rx="112" fill="url(#wash-i)" />
+    <rect width="512" height="512" rx="112" fill="url(#glow-i)" />
+    <rect width="512" height="512" rx="112" fill="url(#grid-i)" />
+    <g transform="translate(112 112) scale(3.0000)">
+      <ellipse fill="#081a10" opacity="0.45" cx="48" cy="85" rx="30" ry="4.8" />
+      <rect fill="#4fd37a" x="22" y="26" width="52" height="32" rx="11" />
+      <rect fill="#4fd37a" x="14" y="46" width="12" height="26" rx="6" />
+      <rect fill="#4fd37a" x="70" y="46" width="12" height="26" rx="6" />
+      <rect fill="#bceecc" x="20" y="52" width="56" height="22" rx="9" />
+      <line fill="none" stroke="#0d2b1a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.28" x1="48" y1="31" x2="48" y2="52" />
+      <path fill="none" stroke="#bdf0cc" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M8 27V12h14" />
+      <path fill="none" stroke="#bdf0cc" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M88 27V12H74" />
+      <path fill="none" stroke="#bdf0cc" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M8 69v15h14" />
+      <path fill="none" stroke="#bdf0cc" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M88 69v15H74" />
+      <path fill="#bdf0cc" d="M48 13Q49.3 16.7 53 18Q49.3 19.3 48 23Q46.7 19.3 43 18Q46.7 16.7 48 13Z" />
+      <path fill="#bdf0cc" d="M14 31.8Q15.092 34.908 18.2 36Q15.092 37.092 14 40.2Q12.908 37.092 9.8 36Q12.908 34.908 14 31.8Z" />
+    </g>
+</svg>
