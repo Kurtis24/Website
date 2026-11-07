@@ -1,131 +1,38 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import IntroAnimation from "@/components/IntroAnimation";
-import Navbar from "@/components/Navbar";
-
-
-// Disable static generation since we use client-side features
-export async function getServerSideProps() {
-  return {
-    props: {},
-  };
-}
+import AnimeHero from "@/components/AnimeHero";
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
-  const [currentSection, setCurrentSection] = useState(0);
-  const [isClient, setIsClient] = useState(false);
   const [windowHeight, setWindowHeight] = useState(1000);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [introDone, setIntroDone] = useState(false);
-  // One-time nudge of the hero photo layers, so the depth between them reads
-  // before anyone has touched the mouse.
-  const [layerNudge, setLayerNudge] = useState(0);
+  // True once the experience list is scrolled to its last job
+  const [expAtEnd, setExpAtEnd] = useState(false);
 
+  // Scroll and resize funnel through one animation frame, so the page
+  // re-renders at most once per frame instead of once per event.
   useEffect(() => {
-    setIsClient(true);
-
-    // Set window height on client side
-    if (typeof window !== 'undefined') {
-      setWindowHeight(window.innerHeight);
-    }
-  }, []);
-
-  useEffect(() => {
-    // Only run on client side
-    if (typeof window === 'undefined') return;
-
-    const handleScroll = () => {
-      const y = window.scrollY;
-      setScrollY(y);
-
-      // Determine current section based on scroll position for border effects
-      const currentWindowHeight = window.innerHeight;
-      const sectionIndex = Math.floor(y / currentWindowHeight);
-
-      // Add rounded border effect when reaching different scroll thresholds
-      if (sectionIndex !== currentSection) {
-        // Remove active class from all sections
-        document.querySelectorAll('.section-transition').forEach(section => {
-          section.classList.remove('active');
-        });
-
-        // Add active class based on scroll progress
-        setTimeout(() => {
-          const sections = document.querySelectorAll('.section-transition');
-          if (sections[sectionIndex]) {
-            sections[sectionIndex].classList.add('active');
-          }
-        }, 100);
-      }
-
-      setCurrentSection(sectionIndex);
-    };
-
-    const handleResize = () => {
+    let raf = 0;
+    const flush = () => {
+      raf = 0;
+      setScrollY(window.scrollY);
       setWindowHeight(window.innerHeight);
     };
-
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [currentSection]);
-
-  // Subtle mouse tracking for gentle parallax
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (typeof window === 'undefined') return;
-
-      const x = (e.clientX / window.innerWidth - 0.5) * 2; // -1 to 1
-      const y = (e.clientY / window.innerHeight - 0.5) * 2; // -1 to 1
-
-      setMousePosition({ x, y });
+    const schedule = () => {
+      if (!raf) raf = requestAnimationFrame(flush);
     };
 
-    if (typeof window !== 'undefined') {
-      document.addEventListener('mousemove', handleMouseMove);
-    }
-
+    flush();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
     return () => {
-      if (typeof window !== 'undefined') {
-        document.removeEventListener('mousemove', handleMouseMove);
-      }
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
     };
   }, []);
-
-  // Rock the two hero photos apart once the intro clears. The layers travel by
-  // different amounts, which is what makes them read as separate planes rather
-  // than one flat picture.
-  useEffect(() => {
-    if (!introDone || typeof window === 'undefined') return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    let raf;
-    let start;
-    const DURATION = 2600;
-
-    const tick = (now) => {
-      if (start === undefined) start = now;
-      const t = (now - start) / DURATION;
-      if (t >= 1) {
-        setLayerNudge(0);
-        return;
-      }
-      // Two and a half swings, damped to nothing.
-      setLayerNudge(Math.sin(t * Math.PI * 5) * (1 - t) ** 2);
-      raf = requestAnimationFrame(tick);
-    };
-
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [introDone]);
 
   // Experience scroll fade effect
   useEffect(() => {
@@ -170,6 +77,9 @@ export default function Home() {
           item.style.opacity = '0';
         }
       });
+
+      const { scrollTop, clientHeight, scrollHeight } = scrollContainer;
+      setExpAtEnd(scrollTop + clientHeight >= scrollHeight - 6);
     };
 
     const scrollContainer = document.querySelector('.experience-scroll');
@@ -255,20 +165,11 @@ export default function Home() {
   const blurAmount = heroProgress * 40;
   const heroOpacity = 1 - heroProgress * 0.85;
 
-  // Parallax. The layers are scaled up a touch below so there is overscan to
-  // travel into, otherwise sliding them would expose the edges of the frame.
-  const backgroundMoveX = mousePosition.x * 7 + layerNudge * 11;
-  const backgroundMoveY = mousePosition.y * 5 + layerNudge * 3;
-  const foregroundMoveX = mousePosition.x * 19 + layerNudge * 30;
-  const foregroundMoveY = mousePosition.y * 12 + layerNudge * 8;
-  // The nudge drives its own frames, so the smoothing transition has to stand
-  // down while it runs or it would flatten the motion into a slow drift.
-  const layerTransition = layerNudge !== 0 ? '0ms' : undefined;
-
   return (
     <div className="min-h-screen">
       <Head>
         <title>Kurtis Lin, Software Engineer</title>
+        <link rel="preload" as="image" href="/images/anime/scene-1.webp" fetchPriority="high" />
         <meta
           name="description"
           content="Kurtis Lin is a Management Engineering student at the University of Waterloo and software engineer. Currently at Totalis (YC P26) and WAT.ai, incoming at Equitable Bank."
@@ -278,178 +179,113 @@ export default function Home() {
           property="og:description"
           content="Management Engineering at University of Waterloo. Projects, experience, and blog."
         />
-        <meta property="og:image" content="/images/Photo_1_web.png" />
+        <meta property="og:image" content="/images/anime/scene-1.jpg" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
       <IntroAnimation onComplete={() => setIntroDone(true)} />
-      <Navbar />
 
-      {/* Hero photo layer - blurs and fades into the shared site background */}
-      <div
-        className="fixed inset-0 z-0 transition-all duration-300 ease-out"
-        style={{
-          filter: `blur(${blurAmount}px)`,
-          opacity: heroOpacity,
-        }}
-      >
-        <div className="absolute inset-0">
-          {/* Background Layer - Photo_1_web.png (lowest layer) */}
-          <div
-            className="absolute inset-0 z-10 transition-transform duration-300 ease-out"
-            style={{
-              backgroundImage: 'url(/images/Photo_1_web.png)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              backgroundAttachment: 'fixed',
-              opacity: 0.8,
-              transform: `translate(${backgroundMoveX}px, ${backgroundMoveY}px) scale(1.06)`,
-              transitionDuration: layerTransition,
-            }}
-          />
-
-          {/* Middle Layer - Name "KURTIS" positioned between images */}
-          <div
-            className="absolute inset-0 z-20 flex justify-center pt-20 lg:pt-32 px-6 lg:px-12 transition-opacity duration-300 ease-out"
-            style={{
-              opacity: Math.max(1 - scrollY / (windowHeight * 0.8), 0),
-            }}
-          >
-            <div className="text-center w-full max-w-4xl mx-auto">
-              <h1
-                className="parallax-name"
-                style={{
-                  animation: introDone ? 'heroReveal 1.1s cubic-bezier(0.23, 1, 0.32, 1) forwards' : 'none',
-                  opacity: 0,
-                }}
-              >
-                KURTIS
-              </h1>
-            </div>
-          </div>
-
-          {/* Foreground Layer - Photo_2.png (highest background layer) */}
-          <div
-            className="absolute inset-0 z-30 transition-transform duration-300 ease-out"
-            style={{
-              backgroundImage: 'url(/images/Photo_2.png)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              backgroundAttachment: 'fixed',
-              transform: `translate(${foregroundMoveX}px, ${foregroundMoveY}px) scale(1.1)`,
-              transitionDuration: layerTransition,
-            }}
-          />
-
-          {/* Overlay for better text readability */}
-          <div className="absolute inset-0 z-40 bg-gradient-to-b from-black/5 via-black/15 to-black/30" />
-        </div>
-      </div>
-
-
+      <AnimeHero
+        introDone={introDone}
+        blur={blurAmount}
+        opacity={heroOpacity}
+        textOpacity={Math.max(1 - scrollY / (windowHeight * 0.7), 0)}
+      />
 
       {/* Content Sections - Scroll over the fixed background */}
       <div className="relative z-10">
-        {/* Hero Section - big name lives in the background layer, tagline + CTA here */}
-        <section className="h-screen flex flex-col items-center justify-end pb-20 px-6 lg:px-8 text-center">
-          <p
-            className="text-lg md:text-2xl font-medium drop-shadow-lg"
-            style={{
-              color: '#F3FFE5',
-              opacity: 0,
-              animation: introDone ? 'heroReveal 1.1s cubic-bezier(0.23, 1, 0.32, 1) 0.25s both' : 'none',
-            }}
-          >
-            Engineering @ University of Waterloo
-          </p>
-
-        </section>
-
-        {/* Experience + Blog */}
-        <section id="experience" className="flex items-center justify-center py-20 pb-24 px-6 lg:px-8">
-          <div className="glass-panel w-full max-w-5xl mx-auto rounded-[32px] p-8 md:p-12 fade-in-up">
-            <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
-              <div className="fade-in-up">
-                <h2 className="text-3xl md:text-4xl font-bold mb-6 text-accent">
-                  Experience
-                </h2>
-                <div className="max-h-[320px] overflow-y-scroll pr-2 space-y-4 experience-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                  {experiences.map((exp, index) => (
-                    <div key={index} className="experience-item flex gap-4 items-start border-l-4 border-accent pl-4 py-2 transition-opacity duration-300">
-                      <div className={`w-12 h-12 flex-shrink-0 rounded-lg shadow-md flex items-center justify-center overflow-hidden ${exp.logo ? 'bg-white' : 'bg-accent/15'}`}>
-                        {exp.logo ? (
-                          <img
-                            src={exp.logo}
-                            alt={exp.company}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <span className="text-accent font-bold text-lg">{exp.initials}</span>
-                        )}
-                      </div>
-                      <div className="flex-grow">
-                        <h4 className="text-lg font-semibold text-gray-100">{exp.role}</h4>
-                        <p className="text-sm text-gray-300">{exp.company}</p>
-                        <p className="text-xs text-gray-400">{exp.dates}</p>
-                        {exp.detail && <p className="text-xs text-gray-400">{exp.detail}</p>}
-                      </div>
-                    </div>
-                  ))}
+        {/* Experience */}
+        <section id="experience" className="flex items-center justify-center py-20 pb-16 px-6 lg:px-8">
+          <div className="ani-panel w-full max-w-5xl mx-auto p-7 md:p-11">
+            <div className="grid lg:grid-cols-[1.15fr_1fr] gap-10 lg:gap-14 items-center">
+              <div className="min-w-0">
+                <div className="ani-section-head">
+                  <h2 className="ani-section-title ani-section-title-lg">Experience</h2>
                 </div>
-                <p className="text-xs text-gray-400 mt-2 text-center">Scroll to see more experiences</p>
+                <div className={`ani-exp-scroll experience-scroll ${expAtEnd ? 'is-end' : ''}`}>
+                  <ol className="ani-exp-list">
+                    {experiences.map((exp, index) => (
+                      <li key={index} className="experience-item ani-exp-item transition-opacity duration-300">
+                        <span className="ani-exp-dot" aria-hidden="true" />
+                        <div className="ani-exp-logo">
+                          <img src={exp.logo} alt={exp.company} className="w-full h-full object-cover" />
+                        </div>
+                        <div className="min-w-0">
+                          <h3 className="ani-exp-role">{exp.role}</h3>
+                          <p className="ani-exp-company">{exp.company}</p>
+                          <p className="ani-exp-meta">{exp.dates}</p>
+                          {exp.detail && <p className="ani-exp-meta">{exp.detail}</p>}
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+                <button
+                  type="button"
+                  className={`ani-exp-hint ${expAtEnd ? 'is-hidden' : ''}`}
+                  onClick={() => document.querySelector('.experience-scroll')?.scrollBy({ top: 150, behavior: 'smooth' })}
+                  tabIndex={expAtEnd ? -1 : 0}
+                  aria-hidden={expAtEnd}
+                >
+                  Scroll for more <span className="ani-exp-hint-arrow" aria-hidden="true">↓</span>
+                </button>
               </div>
 
-              <div className="text-center fade-in-up">
-                <div className="w-48 h-48 md:w-64 md:h-64 rounded-full mx-auto mb-6 overflow-hidden shadow-lg transition-all duration-500 hover:shadow-2xl hover:shadow-accent/40 p-2">
-                  <img
-                    src="/images/profile.jpeg"
-                    alt="Kurtis Lin"
-                    className="w-full h-full object-cover transition-all duration-500 hover:scale-110 hover:rotate-2"
-                    style={{ objectPosition: 'center 30%', transform: 'scale(1.3)' }}
-                  />
+              <div className="flex justify-center">
+                <div className="ani-portrait-wrap">
+                  {/* Both faces carry the photo, so the flip lands on it either way */}
+                  <div className="ani-portrait-lift">
+                  <div className="ani-portrait-flip">
+                    <div className="ani-portrait">
+                      <img
+                        src="/images/profile.webp"
+                        alt="Kurtis Lin"
+                        className="ani-portrait-img"
+                        style={{ objectPosition: '54% center' }}
+                      />
+                      <span className="ani-sparkle" aria-hidden="true">✦</span>
+                    </div>
+                    <div className="ani-portrait ani-portrait-back" aria-hidden="true">
+                      <img
+                        src="/images/profile.webp"
+                        alt=""
+                        className="ani-portrait-img"
+                        style={{ objectPosition: '54% center' }}
+                      />
+                    </div>
+                  </div>
+                  </div>
                 </div>
-                <p className="text-gray-200 font-semibold text-lg">Kurtis Lin</p>
-                <p className="mt-4 text-sm text-gray-400 leading-relaxed text-left max-w-sm mx-auto">
-                  I&apos;m a Management Engineering student at the University of Waterloo,
-                  Class of 2028. Right now I build trading tools and fraud checks at Totalis
-                  (YC P26) and sports analytics models at WAT.ai, and I join Equitable Bank
-                  in Fall 2026.
-                </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Footer */}
+        {/* Contact */}
         <footer id="contact" className="px-6 lg:px-8 pb-10">
-          <div className="glass-panel max-w-5xl mx-auto rounded-[32px] p-8 md:p-12">
-            <div className="grid md:grid-cols-[1.2fr_1fr] gap-10 md:gap-12">
-              {/* Left: the pitch */}
+          <div className="ani-panel ani-contact max-w-5xl mx-auto">
+            <div className="ani-contact-head">
+              <div className="ani-section-head">
+                <h2 className="ani-section-title ani-section-title-lg">Let&apos;s connect</h2>
+              </div>
+            </div>
+
+            <div className="ani-contact-body grid md:grid-cols-[1.2fr_1fr] gap-8 md:gap-12">
               <div>
-                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-accent">
-                  Let&apos;s connect
-                </h2>
-                <p className="text-gray-300 leading-relaxed mb-6 max-w-sm">
+                <p className="ani-label">Say hello</p>
+                <p className="ani-contact-line">
                   Always happy to chat about software, internships, or ultimate frisbee.
                 </p>
                 <div className="flex flex-wrap items-center gap-3">
-                  <a
-                    href="mailto:jh7lin@uwaterloo.ca"
-                    className="inline-flex items-center gap-2.5 px-5 py-3 rounded-full font-medium border border-accent/40 bg-accent/10 text-accent hover:bg-accent/20 transition-colors duration-300"
-                  >
-                    <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <a href="mailto:jh7lin@uwaterloo.ca" className="ani-btn">
+                    <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                     jh7lin@uwaterloo.ca
                   </a>
-                  <Link
-                    href="/blog"
-                    className="inline-flex items-center gap-2.5 px-5 py-3 rounded-full font-medium border border-white/15 bg-white/[0.04] text-gray-200 hover:bg-white/[0.09] hover:border-accent/40 transition-colors duration-300"
-                  >
-                    <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                  <Link href="/blog" className="ani-btn ani-btn-ghost-dark">
+                    <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true">
                       <path d="M4 19.5V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2Z" />
                       <path d="M8 7h7M8 11h7" />
                     </svg>
@@ -458,44 +294,35 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Right: elsewhere */}
               <div>
-                <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-400 mb-4">
-                  Elsewhere
-                </h3>
-                <div className="space-y-2.5">
+                <p className="ani-label">Elsewhere</p>
+                <div className="grid gap-2.5">
                   {socials.map((social) => (
                     <a
                       key={social.label}
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 hover:bg-white/[0.07] hover:border-accent/40 transition-all duration-300"
+                      className="ani-social"
                     >
-                      <svg
-                        className="w-5 h-5 flex-shrink-0 text-gray-400 group-hover:text-accent transition-colors duration-300"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d={social.path} />
-                      </svg>
+                      <span className="ani-social-icon">
+                        <svg className="w-[18px] h-[18px]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                          <path d={social.path} />
+                        </svg>
+                      </span>
                       <span className="flex-grow min-w-0">
-                        <span className="block text-sm font-medium text-gray-200">{social.label}</span>
-                        <span className="block text-xs text-gray-500 truncate">{social.handle}</span>
+                        <span className="block text-sm font-bold">{social.label}</span>
+                        <span className="block text-xs ani-exp-meta truncate">{social.handle}</span>
                       </span>
-                      <span className="text-gray-600 group-hover:text-accent group-hover:translate-x-0.5 transition-all duration-300">
-                        →
-                      </span>
+                      <span className="ani-more-arrow" aria-hidden="true">→</span>
                     </a>
                   ))}
                 </div>
               </div>
             </div>
 
-            <div className="border-t border-white/10 mt-10 pt-6">
-              <p className="text-gray-500 text-sm text-center sm:text-left">
-                © 2026 Kurtis Lin. Built with some cups of coffee
-              </p>
+            <div className="ani-footnote">
+              <p>© 2026 Kurtis Lin. Built with some cups of coffee</p>
             </div>
           </div>
         </footer>

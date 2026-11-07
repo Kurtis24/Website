@@ -3,7 +3,6 @@
 import Head from "next/head";
 import Link from "next/link";
 import katex from "katex";
-import Navbar from "@/components/Navbar";
 import { blogPosts } from "@/lib/blog";
 
 // Render inline math wrapped in $...$ to KaTeX HTML at build time
@@ -64,13 +63,13 @@ export default function BlogPostPage({ post, newer, older }) {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
-      <Navbar />
 
-      <main className="pt-24 pb-20 px-6 lg:px-8">
+      <main className="pt-14 pb-20 px-6 lg:px-8">
         <article className="max-w-3xl mx-auto">
           <div className="mb-6">
-            <Link href="/blog" className="text-sm text-gray-400 hover:text-white transition-colors">
-              ← All posts
+            <Link href="/blog" className="ani-back">
+              <span className="ani-back-arrow" aria-hidden="true">←</span>
+              All posts
             </Link>
           </div>
 

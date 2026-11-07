@@ -2,7 +2,6 @@
 
 import Head from "next/head";
 import Link from "next/link";
-import Navbar from "@/components/Navbar";
 import { blogPosts } from "@/lib/blog";
 
 export default function BlogPage() {
@@ -16,13 +15,13 @@ export default function BlogPage() {
         />
       </Head>
 
-      <Navbar />
 
-      <main className="pt-24 pb-20 px-6 lg:px-8">
+      <main className="pt-14 pb-20 px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="mb-4">
-            <Link href="/" className="text-sm text-gray-400 hover:text-white transition-colors">
-              ← Back home
+            <Link href="/" className="ani-back">
+              <span className="ani-back-arrow" aria-hidden="true">←</span>
+              Back home
             </Link>
           </div>
 

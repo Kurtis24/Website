@@ -1,11 +1,9 @@
 import Head from "next/head";
 import Link from "next/link";
-import Navbar from "@/components/Navbar";
 import ProjectCover from "@/components/ProjectCover";
 import { githubRepos } from "@/lib/projects";
 
-const iconClass =
-  "relative z-20 inline-flex items-center justify-center w-8 h-8 rounded-full text-gray-400 hover:text-white hover:bg-white/[0.08] transition-colors";
+const iconClass = "ani-icon";
 
 function GitHubIcon() {
   return (
@@ -45,39 +43,36 @@ export default function ProjectsPage() {
         />
       </Head>
 
-      <Navbar />
 
-      <main className="pt-28 pb-24 px-6 lg:px-8">
+      <main className="pt-14 pb-24 px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="mb-6">
-            <Link href="/" className="text-sm text-gray-400 hover:text-white transition-colors">
-              ← Back home
+            <Link href="/" className="ani-back">
+              <span className="ani-back-arrow" aria-hidden="true">←</span>
+              Back home
             </Link>
           </div>
 
-          <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-accent">
-              All Projects
-            </h1>
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-              Click a project to read more about it
-            </p>
+          <div className="text-center mb-14">
+            <h1 className="ani-page-title">All Projects</h1>
+            <p className="ani-subtitle">Click a project to read more about it</p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
-            {githubRepos.map((repo) => (
-              <div
-                key={repo.slug}
-                className="glass-card project-card group relative rounded-2xl overflow-hidden flex flex-col"
-              >
-                <div className="aspect-[2/1] overflow-hidden border-b border-white/[0.06]">
-                  <ProjectCover repo={repo} />
-                </div>
-                <div className="p-6 flex flex-col gap-2.5 flex-grow">
-                  <h2 className="project-card-title font-semibold text-gray-100">{repo.title}</h2>
-                  <p className="text-sm text-gray-400 leading-relaxed flex-grow">{repo.summary}</p>
-                  <div className="flex items-center justify-between gap-2 pt-2">
-                    <div className="flex items-center gap-1 -ml-1.5">
+            {githubRepos.map((repo, index) => (
+              <article key={repo.slug} className="ani-card">
+                <ProjectCover repo={repo} index={index} />
+                <div className="ani-card-body">
+                  <p className="ani-summary">{repo.summary}</p>
+                  {repo.tech?.length > 0 && (
+                    <ul className="ani-chips" aria-label="Built with">
+                      {repo.tech.slice(0, 3).map((tech) => (
+                        <li key={tech}>{tech}</li>
+                      ))}
+                    </ul>
+                  )}
+                  <div className="ani-card-footer">
+                    <div className="flex items-center gap-2">
                       {repo.url && (
                         <a
                           href={repo.url}
@@ -103,8 +98,8 @@ export default function ProjectsPage() {
                         </a>
                       )}
                     </div>
-                    <span className="text-accent relative z-20 text-xs flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      Open&nbsp;→
+                    <span className="ani-more" aria-hidden="true">
+                      Read more <span className="ani-more-arrow">→</span>
                     </span>
                   </div>
                 </div>
@@ -112,10 +107,10 @@ export default function ProjectsPage() {
                 {/* Covers the card so the whole tile links through, sitting under the icons above. */}
                 <Link
                   href={`/projects/${repo.slug}`}
-                  className="absolute inset-0 z-10"
-                  aria-label={repo.title}
+                  className="ani-card-link"
+                  aria-label={`Read more about ${repo.title}`}
                 />
-              </div>
+              </article>
             ))}
           </div>
 
@@ -124,7 +119,7 @@ export default function ProjectsPage() {
               href="https://github.com/Kurtis24"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block px-6 py-2.5 rounded-full font-medium border border-white/[0.14] hover:bg-white/[0.06] transition-colors duration-300 text-gray-300"
+              className="ani-btn ani-btn-ghost"
             >
               View all on GitHub →
             </a>
