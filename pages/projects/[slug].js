@@ -53,7 +53,6 @@ function NavCard({ project, direction }) {
 
 export default function ProjectLandingPage({ project, index, prev, next }) {
   const howItWorks = project.howItWorks || [];
-  const highlights = project.highlights || [];
   const tech = project.tech || [];
 
   return (
@@ -134,20 +133,6 @@ export default function ProjectLandingPage({ project, index, prev, next }) {
               <section>
                 <SectionHeading>What it is</SectionHeading>
                 <p className="ani-prose">{project.overview}</p>
-              </section>
-            )}
-
-            {highlights.length > 0 && (
-              <section>
-                <SectionHeading>Highlights</SectionHeading>
-                <ul className="ani-highlights">
-                  {highlights.map((h) => (
-                    <li key={h}>
-                      <span className="ani-highlight-star" aria-hidden="true">✦</span>
-                      {h}
-                    </li>
-                  ))}
-                </ul>
               </section>
             )}
 
